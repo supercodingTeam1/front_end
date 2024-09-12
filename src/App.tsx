@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Header from "./component/Header";
+import Footer from "./component/Footer";
 
 function App() {
   return (
     <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header />
+      <Outlet />
+      <Footer />
     </>
   );
 }
