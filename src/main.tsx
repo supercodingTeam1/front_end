@@ -7,6 +7,10 @@ import Cart from "./pages/Cart";
 import App from "./App";
 import Detail from "./pages/Detail";
 import { Checkout } from "./pages/Checkout";
+import ManageProduct from "./pages/ManageProduct";
+import AddProductInfo from "./pages/ManageProduct/AddProduct/AddProductInfo";
+import Products from "./pages/ManageProduct/Products";
+import AddProductVariant from "./pages/ManageProduct/AddProduct/AddProductVariant";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +28,24 @@ const router = createBrowserRouter([
       {
         path: "checkout",
         element: <Checkout />,
+      },
+      {
+        path: "manage",
+        element: <ManageProduct />,
+        children: [
+          {
+            path: "products",
+            element: <Products />,
+          },
+          {
+            path: "add-info",
+            element: <AddProductInfo />,
+          },
+          {
+            path: "add-variant",
+            element: <AddProductVariant />,
+          },
+        ],
       },
     ],
     errorElement: <ErrorPage />,
