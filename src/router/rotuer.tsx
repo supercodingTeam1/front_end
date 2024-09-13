@@ -6,6 +6,7 @@ import ErrorPage from "../pages/ErrorPage";
 import Mypage from "../pages/myPage/Mypage";
 import Login from "../pages/auth/Loigin";
 import Join from "../pages/auth/Join";
+import { Checkout } from "../pages/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "detail/:productId",
         element: <Detail />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
       {
         path : "login",
