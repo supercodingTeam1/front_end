@@ -6,6 +6,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Cart from "./pages/Cart";
 import App from "./App";
 import Detail from "./pages/Detail";
+import { Checkout } from "./pages/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "detail/:productId",
         element: <Detail />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
     ],
     errorElement: <ErrorPage />,
