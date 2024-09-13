@@ -7,6 +7,10 @@ import Mypage from "../pages/myPage/Mypage";
 import Login from "../pages/auth/Loigin";
 import Join from "../pages/auth/Join";
 import { Checkout } from "../pages/Checkout";
+import ManageProduct from "../pages/ManageProduct";
+import Products from "../pages/ManageProduct/Products";
+import AddProductInfo from "../pages/ManageProduct/AddProduct/AddProductInfo";
+import AddProductVariant from "../pages/ManageProduct/AddProduct/AddProductVariant";
 
 const router = createBrowserRouter([
   {
@@ -26,17 +30,35 @@ const router = createBrowserRouter([
         element: <Checkout />,
       },
       {
-        path : "login",
+        path: "manage",
+        element: <ManageProduct />,
+        children: [
+          {
+            path: "products",
+            element: <Products />,
+          },
+          {
+            path: "add-info",
+            element: <AddProductInfo />,
+          },
+          {
+            path: "add-variant",
+            element: <AddProductVariant />,
+          },
+        ],
+      },
+      {
+        path:'login',
         element: <Login/>
       },
       {
-        path: "join",
-        element : <Join/>
+        path:'join',
+        element: <Join/>
       },
       {
-        path: 'myPage',
-        element : <Mypage/>
-      }
+        path:'mypage',
+        element: <Mypage/>
+      },
     ],
     errorElement: <ErrorPage />,
   },
