@@ -1,9 +1,11 @@
 import { MxLayout } from "../../layout/MxLayout"
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import MyContent from "./mycontent"
 
 
 
 const Mypage = () => {
+  const location = useLocation()
 
 
   return (
@@ -17,15 +19,19 @@ const Mypage = () => {
                   <span className="block pb-2 px-4 text-xs  text-gray-400 ">자주찾는 메뉴</span>
                   <ul className="cursor-pointer ">
                     <li className=" py-3 px-4 h-12 leading-12 transition duration-200 ">내정보수정</li>
-                    <li className=" py-3 px-4 h-12 leading-12 transition duration-200 ">주문리스트</li>
-                    <li className="py-3 px-4 h-12 leading-12 transition duration-200  ">판매리스트</li>
+                    <li className=" py-3 px-4 h-12 leading-12 transition duration-200 ">
+                      <NavLink to={'orderlist'}>주문리스트</NavLink>
+                    </li>
+                    <li className="py-3 px-4 h-12 leading-12 transition duration-200  ">
+                      <NavLink to={'saleslist'}>주문리스트</NavLink>
+                    </li>
                     <li className="py-3 px-4 h-12 leading-12 transition duration-200 ">회원탈퇴</li>
                   </ul>
               </nav>
             </div>
           </div>
           <div className="ml-15 flex-1">
-            <MyContent/>
+            {location.pathname === '/mypage' ? <MyContent/> : <Outlet/>}
           </div>
         </div>
       </MxLayout>
