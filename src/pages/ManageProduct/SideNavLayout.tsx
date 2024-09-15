@@ -1,14 +1,14 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-export default function ManageProduct() {
+export default function SideNavLayout() {
   const location = useLocation();
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen ">
       <nav className="w-64 bg-white shadow-lg">
         <div className="p-5">
-          <h1 className="text-2xl font-bold text-gray-800 mb-5">관리자 패널</h1>
+          <h1 className="text-2xl font-bold text-gray-800 mb-5">판매자 패널</h1>
           <ul className="space-y-2">
             <li>
               <NavLink
@@ -41,11 +41,8 @@ export default function ManageProduct() {
           </ul>
         </div>
       </nav>
-      <main className="flex-1 p-10 overflow-y-auto">
-        <div className="flex flex-col">
-          <div>information</div>
-          <Outlet />
-        </div>
+      <main className=" overflow-y-auto w-full">
+        <Outlet />
       </main>
     </div>
   );
