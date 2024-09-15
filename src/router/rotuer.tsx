@@ -3,11 +3,13 @@ import App from "../App";
 import Cart from "../pages/Cart";
 import Detail from "../pages/Detail";
 import ErrorPage from "../pages/ErrorPage";
-import Mypage from "../pages/myPage/Mypage";
 import Login from "../pages/auth/Loigin";
 import Join from "../pages/auth/Join";
 import { Checkout } from "../pages/Checkout";
+import Mypage from "../pages/myPage";
 import { AddProduct } from "../pages/ManageProduct/AddProduct";
+import MySellerList from "../pages/myPage/mylist/mysellerlist";
+import MyOrderList from "../pages/myPage/mylist/myorderlist";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,16 @@ const router = createBrowserRouter([
       {
         path: "mypage",
         element: <Mypage />,
+        children: [
+          {
+            path: "saleslist",
+            element: <MySellerList />,
+          },
+          {
+            path: "orderlist",
+            element: <MyOrderList />,
+          },
+        ],
       },
     ],
     errorElement: <ErrorPage />,
