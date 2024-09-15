@@ -23,7 +23,7 @@ export function RouteBanner(props: IRouteBannerProps) {
 
   console.log("path", pathname);
   return (
-    <div className="bg-pink-100 h-72 flex items-center justify-center font-bold text-2xl">
+    <div className="bg-pink-100 h-40 flex items-center justify-center font-bold text-2xl">
       {displayText()}
     </div>
   );
