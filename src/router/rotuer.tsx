@@ -11,6 +11,7 @@ import SideNav from "../pages/ManageProduct/SideNavLayout";
 import Products from "../pages/ManageProduct/Products";
 import AddProductInfo from "../pages/ManageProduct/AddProduct/AddProductInfo";
 import AddProductVariant from "../pages/ManageProduct/AddProduct/AddProductVariant";
+import { AddProduct } from "../pages/ManageProduct/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -30,27 +31,27 @@ const router = createBrowserRouter([
         element: <Checkout />,
       },
       {
-        path: "manage",
-        element: <SideNav />,
-        children: [
-          {
-            index: true,
-            element: <Navigate to="products" replace />,
-          },
-          {
-            path: "products",
-            element: <Products />,
-          },
-          {
-            path: "add-info",
-            element: <AddProductInfo />,
-          },
-          {
-            path: "add-variant",
-            element: <AddProductVariant />,
-          },
-        ],
+        path: "add-product",
+        element: <AddProduct />,
       },
+      // {
+      //   path: "manage",
+      //   element: <SideNav />,
+      //   children: [
+      //     {
+      //       index: true,
+      //       element: <Navigate to="products" replace />,
+      //     },
+      //     {
+      //       path: "products",
+      //       element: <Products />,
+      //     },
+      //     {
+      //       path: "add",
+      //       element: <AddProduct />,
+      //     },
+      //   ],
+      // },
       {
         path: "login",
         element: <Login />,

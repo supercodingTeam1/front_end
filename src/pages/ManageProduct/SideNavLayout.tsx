@@ -26,10 +26,10 @@ export default function SideNavLayout() {
             </li>
             <li>
               <NavLink
-                to={`add-info`}
+                to={`add`}
                 className={({ isActive }) =>
                   `block py-2 px-4 rounded transition duration-200 ${
-                    isActive || location.pathname.includes("add-variant")
+                    isActive
                       ? "bg-blue-500 text-white"
                       : "text-gray-700 hover:bg-blue-500 hover:text-white"
                   }`

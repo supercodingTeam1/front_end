@@ -2,7 +2,11 @@ import { useState } from "react";
 import step2 from "../../../assets/step2.png";
 import Published from "../../../assets/published.png";
 
-export default function AddProductVariant() {
+interface IAddProductVariantProps {
+  previousPage: () => void;
+}
+
+export default function AddProductVariant(props: IAddProductVariantProps) {
   const sizes = [
     220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290,
     295, 300,
@@ -63,7 +67,7 @@ export default function AddProductVariant() {
       </div>
       <div className="absolute bottom-10 right-10 space-x-4">
         <button
-          onClick={() => window.history.back()}
+          onClick={props.previousPage}
           className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 "
         >
           뒤로 가기
