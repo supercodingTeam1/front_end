@@ -7,10 +7,6 @@ import Mypage from "../pages/myPage/Mypage";
 import Login from "../pages/auth/Loigin";
 import Join from "../pages/auth/Join";
 import { Checkout } from "../pages/Checkout";
-import SideNav from "../pages/ManageProduct/SideNavLayout";
-import Products from "../pages/ManageProduct/Products";
-import AddProductInfo from "../pages/ManageProduct/AddProduct/AddProductInfo";
-import AddProductVariant from "../pages/ManageProduct/AddProduct/AddProductVariant";
 import { AddProduct } from "../pages/ManageProduct/AddProduct";
 
 const router = createBrowserRouter([
