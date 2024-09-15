@@ -3,7 +3,6 @@ import App from "../App";
 import Cart from "../pages/Cart";
 import Detail from "../pages/Detail";
 import ErrorPage from "../pages/ErrorPage";
-import Mypage from "../pages/myPage/Mypage";
 import Login from "../pages/auth/Loigin";
 import Join from "../pages/auth/Join";
 import { Checkout } from "../pages/Checkout";
@@ -11,6 +10,7 @@ import ManageProduct from "../pages/ManageProduct";
 import Products from "../pages/ManageProduct/Products";
 import AddProductInfo from "../pages/ManageProduct/AddProduct/AddProductInfo";
 import AddProductVariant from "../pages/ManageProduct/AddProduct/AddProductVariant";
+import Mypage from "../pages/myPage";
 
 const router = createBrowserRouter([
   {

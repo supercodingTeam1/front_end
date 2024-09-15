@@ -1,0 +1,36 @@
+import { MxLayout } from "../../layout/MxLayout"
+import MyContent from "./mycontent"
+
+
+
+const Mypage = () => {
+
+
+  return (
+    <>
+      <MxLayout>
+        <div className="flex gap-10 overflow-hidden">
+          <div className="h-full w-[260px]  rounded-md border border-black border-solid">
+            <div className="flex-1 flex-col ">
+              <h2 className=" px-4 bg-indigo-100 py-5 rounded-t-md  border-b border-black border-solid text-xl uppercase font-bold">menu</h2>
+              <nav className="py-6">
+                  <span className="block pb-2 px-4 text-xs  text-gray-400 ">자주찾는 메뉴</span>
+                  <ul className="cursor-pointer ">
+                    <li className=" py-3 px-4 h-12 leading-12 transition duration-200 ">내정보수정</li>
+                    <li className=" py-3 px-4 h-12 leading-12 transition duration-200 ">주문리스트</li>
+                    <li className="py-3 px-4 h-12 leading-12 transition duration-200  ">판매리스트</li>
+                    <li className="py-3 px-4 h-12 leading-12 transition duration-200 ">회원탈퇴</li>
+                  </ul>
+              </nav>
+            </div>
+          </div>
+          <div className="ml-15 flex-1">
+            <MyContent/>
+          </div>
+        </div>
+      </MxLayout>
+    </>
+  )
+}
+
+export default Mypage
