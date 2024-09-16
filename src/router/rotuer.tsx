@@ -6,15 +6,10 @@ import ErrorPage from "../pages/ErrorPage";
 import Login from "../pages/auth/Loigin";
 import Join from "../pages/auth/Join";
 import { Checkout } from "../pages/Checkout";
-import SideNav from "../pages/ManageProduct/SideNavLayout";
-import Products from "../pages/ManageProduct/Products";
-import AddProductInfo from "../pages/ManageProduct/AddProduct/AddProductInfo";
-import AddProductVariant from "../pages/ManageProduct/AddProduct/AddProductVariant";
 import Mypage from "../pages/myPage";
 import { AddProduct } from "../pages/ManageProduct/AddProduct";
 import MySellerList from "../pages/myPage/mylist/mysellerlist";
 import MyOrderList from "../pages/myPage/mylist/myorderlist";
-
 
 const router = createBrowserRouter([
   {
@@ -66,16 +61,16 @@ const router = createBrowserRouter([
       {
         path: "mypage",
         element: <Mypage />,
-        children:[
+        children: [
           {
-            path: 'saleslist',
-            element: <MySellerList/>
+            path: "saleslist",
+            element: <MySellerList />,
           },
           {
-            path: 'orderlist',
-            element: <MyOrderList/>
-          }
-        ]
+            path: "orderlist",
+            element: <MyOrderList />,
+          },
+        ],
       },
     ],
     errorElement: <ErrorPage />,
