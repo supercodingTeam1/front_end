@@ -10,12 +10,17 @@ import Mypage from "../pages/myPage";
 import { AddProduct } from "../pages/ManageProduct/AddProduct";
 import MySellerList from "../pages/myPage/mylist/mysellerlist";
 import MyOrderList from "../pages/myPage/mylist/myorderlist";
+import Home from "../pages/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        index: true,
+        element: <Home />,
+      },
       {
         path: "cart",
         element: <Cart />,
