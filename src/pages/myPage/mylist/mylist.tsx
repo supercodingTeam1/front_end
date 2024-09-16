@@ -1,15 +1,18 @@
+import { useLocation } from "react-router-dom"
 import MyBosxItem from "./myBox"
 
 
 
 
 const MyList = () => {
-
+const location = useLocation()
 
   return (
     <>
       <div className="border-t border-black pt-5">
-        <p className="mb-5 font-bold">주문목록   또는 판매내역 </p>
+        <p className="mb-5 font-bold">
+          {location.pathname === '/mypage' ? '주문내역 또는 판매내역' : ''}
+        </p>
         <div className="">
           <div className="bg-indigo-100 py-4 px-6">
             <ul className="flex justify-around">
@@ -21,7 +24,7 @@ const MyList = () => {
             </ul>
           </div>
         </div>
-        <MyBosxItem/>
+        {location.pathname === '/mypage' ? <MyBosxItem/> : ''}
       </div>
     </>
   )
