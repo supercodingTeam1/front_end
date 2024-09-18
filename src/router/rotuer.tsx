@@ -12,6 +12,7 @@ import MySellerList from "../pages/myPage/mylist/mysellerlist";
 import MyOrderList from "../pages/myPage/mylist/myorderlist";
 import Home from "../pages/home";
 import RouteBanner from "../layout/RouteBanner";
+import ProductList from "../pages/ProductList";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
           {
             path: "checkout",
             element: <Checkout />,
+          },
+          {
+            path: "product-list",
+            element: <ProductList />,
           },
         ],
       },

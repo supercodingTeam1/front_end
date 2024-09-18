@@ -27,7 +27,7 @@ export default function BestRank(props: IBestRankProps) {
   const items = [1, 2, 3, 4, 5, 6];
   return (
     <div>
-      <Slider {...settings} className="w-full py-6 ">
+      <Slider {...settings} className="w-full py-6 my-10">
         {items.map((item, index) => {
           return (
             <div
