@@ -1,7 +1,21 @@
 import { useState } from "react";
 import shoe from "../assets/shoe.png";
 import infinity from "../assets/infinity.png";
-import Carousel from "../component/Carousel";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: false,
+  autoplaySpeed: 2000,
+  centerMode: true, // 가운데 모드 활성화
+  centerPadding: "0", // 양옆 여백 제거
+};
 
 export default function Detail() {
   const [quantity, setQuantity] = useState(1);
@@ -10,7 +24,11 @@ export default function Detail() {
 
   return (
     <div className="flex flex-col lg:flex-row gap-12 items-center justify-center p-8 bg-blue-100">
-      <Carousel images={images} />
+      <Slider {...settings} className="w-96 h-96 bg-yellow-100">
+        {images.map((image) => (
+          <img src={image} className="object-contain w-96 h-96" />
+        ))}
+      </Slider>
       <section className="flex flex-col w-full lg:w-1/3 space-y-4">
         <h1 className="text-3xl font-bold">Asgaard 소파</h1>
         <h2 className="text-2xl font-semibold">250,000원</h2>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import deleteIcon from "../assets/deleteIcon.png";
 import shoe from "../assets/shoe.png";
-import { MxLayout } from "../layout/MxLayout";
+import MxLayout from "../layout/MxLayout";
 
 export default function Cart() {
   const [quantity, setQuantity] = useState(1);
