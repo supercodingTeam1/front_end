@@ -1,6 +1,7 @@
 import * as React from "react";
 import ItemCard from "../../component/ItemCard";
 import MxLayout from "../../layout/MxLayout";
+import Pagination from "../../component/Pagination";
 
 export interface IProductListProps {}
 
@@ -18,7 +19,9 @@ export default function ProductList(props: IProductListProps) {
           })}
         </div>
         {/* pagination */}
-        <div className="bg-yellow-100">페이지네이션</div>
+        <div className="my-10">
+          <Pagination />
+        </div>
       </MxLayout>
     </div>
   );
