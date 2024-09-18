@@ -26,7 +26,7 @@ const Mypage = () => {
                     <NavLink to={"orderlist"}>주문리스트</NavLink>
                   </li>
                   <li className="py-3 px-4 h-12 leading-12 transition duration-200  ">
-                    <NavLink to={"saleslist"}>주문리스트</NavLink>
+                    <NavLink to={"saleslist"}>판매리스트</NavLink>
                   </li>
                   <li className="py-3 px-4 h-12 leading-12 transition duration-200 ">
                     회원탈퇴
