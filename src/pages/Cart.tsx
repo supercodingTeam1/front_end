@@ -64,7 +64,7 @@ export default function Cart() {
           </div>
         </div>
         {/* 오른쪽 총계 */}
-        <div className="w-full md:w-1/3 h-auto md:h-[300px] bg-[#F9F1E7] pt-5 flex flex-col justify-between items-center px-4 md:px-20">
+        <div className="w-full md:w-1/3 h-auto md:h-[300px] bg-black pt-5 flex flex-col justify-between items-center px-4 md:px-20">
           <h2 className="text-2xl font-bold mb-4">주문 요약</h2>
           <div className="flex justify-between mb-4">
             <span>총계:</span>
