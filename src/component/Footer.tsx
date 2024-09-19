@@ -2,7 +2,7 @@ import MxLayout from "../layout/MxLayout";
 
 export default function Footer() {
   return (
-    <div className=" border-t border-gray-400">
+    <div className=" border-t border-gray-light">
       <MxLayout>
         <div className="flex justify-between">
           <div className="">
@@ -38,10 +38,10 @@ export default function Footer() {
             <button className="border-b border-black ">SUBSCRIBE</button>
           </div>
         </div>
+        <div className="border-t border-gray-light py-6">
+          <p>2023 furino. All rights reserved</p>
+        </div>
       </MxLayout>
-      <div className="border-t border-gray-400 pt-12 ">
-        <p className="ml-40">2023 furino. All rights reserved</p>
-      </div>
     </div>
   );
 }
