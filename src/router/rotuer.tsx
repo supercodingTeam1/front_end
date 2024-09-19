@@ -5,12 +5,14 @@ import Detail from "../pages/Detail";
 import ErrorPage from "../pages/ErrorPage";
 import Login from "../pages/auth/Loigin";
 import Join from "../pages/auth/Join";
-import { Checkout } from "../pages/Checkout";
+import Checkout from "../pages/Checkout";
 import Mypage from "../pages/myPage";
-import { AddProduct } from "../pages/ManageProduct/AddProduct";
-import MySellerList from "../pages/myPage/mylist/mysellerlist";
+import { AddProduct } from "../pages/manageProduct/AddProduct";
+// import MySellerList from "../pages/myPage/mylist/mysellerlist";
 import MyOrderList from "../pages/myPage/mylist/myorderlist";
-import Home from "../pages/Home";
+import Home from "../pages/home";
+import RouteBanner from "../layout/RouteBanner";
+import ProductList from "../pages/ProductList";
 
 const router = createBrowserRouter([
   {
@@ -22,16 +24,25 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "cart",
-        element: <Cart />,
+        element: <RouteBanner />, //경로배너
+        children: [
+          {
+            path: "cart",
+            element: <Cart />,
+          },
+          {
+            path: "checkout",
+            element: <Checkout />,
+          },
+          {
+            path: "product-list",
+            element: <ProductList />,
+          },
+        ],
       },
       {
         path: "detail/:productId",
         element: <Detail />,
-      },
-      {
-        path: "checkout",
-        element: <Checkout />,
       },
       {
         path: "add-product",

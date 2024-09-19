@@ -1,6 +1,9 @@
-import { MxLayout } from "../../layout/MxLayout";
+
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+
+
 import MyContent from "./mycontent";
+import MxLayout from "../../layout/MxLayout";
 
 const Mypage = () => {
   const location = useLocation();
@@ -9,6 +12,7 @@ const Mypage = () => {
   const moveAdd = () => {
     navigate("/add-product");
   };
+
 
   return (
     <>

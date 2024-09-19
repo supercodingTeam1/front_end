@@ -5,7 +5,7 @@ import searchIcon from "../assets/searchIcon.png";
 
 export default function Header() {
   return (
-    <nav className="flex justify-between px-12 h-[100px]  items-center">
+    <nav className="flex justify-between px-12 h-[100px]  items-center ">
       <Link to="/">ICON</Link>
       {/* category */}
       <div className="flex gap-20 text-base">
