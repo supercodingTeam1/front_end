@@ -26,7 +26,7 @@ export default function RouteBanner(props: IRouteBannerProps) {
   console.log("path", pathname);
   return (
     <>
-      <div className="bg-pink-100 h-40 flex items-center justify-center font-bold text-2xl">
+      <div className="bg-[url('/src/assets/logan-weaver-lgnwvr-GILIG9XVfo4-unsplash.jpg')] h-40 flex items-center justify-center text-2xl text-white">
         {displayText()}
       </div>
       <Outlet />

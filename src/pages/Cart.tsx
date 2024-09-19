@@ -2,6 +2,7 @@ import { useState } from "react";
 import deleteIcon from "../assets/deleteIcon.png";
 import shoe from "../assets/shoe.png";
 import MxLayout from "../layout/MxLayout";
+import Button from "../component/Button";
 
 export default function Cart() {
   const [quantity, setQuantity] = useState(1);
@@ -29,7 +30,7 @@ export default function Cart() {
         {/* 왼쪽 상품 목록 */}
         <div className="w-full md:w-2/3 md:mr-8 mb-8 md:mb-0">
           {/* 테이블 제목 */}
-          <div className="flex justify-between pb-2 mb-4 font-bold bg-[#F9F1E7] p-2 overflow-x-auto">
+          <div className="flex justify-between pb-2 mb-4 font-bold bg-black p-2 overflow-x-auto text-white">
             <div className="w-2/5 pl-2 md:pl-10">상품</div>
             <div className="w-1/5 text-center">가격</div>
             <div className="w-1/5 text-center">수량</div>
@@ -64,16 +65,14 @@ export default function Cart() {
           </div>
         </div>
         {/* 오른쪽 총계 */}
-        <div className="w-full md:w-1/3 h-auto md:h-[300px] bg-black pt-5 flex flex-col justify-between items-center px-4 md:px-20">
+        <div className="w-full md:w-1/3 h-auto md:h-[300px] bg-black py-5 flex flex-col justify-between items-center  text-white">
           <h2 className="text-2xl font-bold mb-4">주문 요약</h2>
           <div className="flex justify-between mb-4">
             <span>총계:</span>
             <span className="font-bold">₩ {total.toLocaleString()}</span>
           </div>
 
-          <button className="w-full border border-black text-black py-2 hover:bg-gray-100 transition-colors rounded-md">
-            결제하기
-          </button>
+          <Button primary>결제하기</Button>
         </div>
       </div>
     </MxLayout>

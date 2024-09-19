@@ -13,6 +13,7 @@ import MyOrderList from "../pages/myPage/mylist/myorderlist";
 import Home from "../pages/home";
 import RouteBanner from "../layout/RouteBanner";
 import ProductList from "../pages/ProductList";
+import Header from "../component/HeadNavBar";
 
 const router = createBrowserRouter([
   {
