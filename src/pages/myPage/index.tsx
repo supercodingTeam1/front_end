@@ -1,9 +1,18 @@
-import MxLayout from "../../layout/MxLayout";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+
+
 import MyContent from "./mycontent";
+import MxLayout from "../../layout/MxLayout";
 
 const Mypage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const moveAdd = () => {
+    navigate("/add-product");
+  };
+
 
   return (
     <>
@@ -25,8 +34,11 @@ const Mypage = () => {
                   <li className=" py-3 px-4 h-12 leading-12 transition duration-200 ">
                     <NavLink to={"orderlist"}>주문리스트</NavLink>
                   </li>
-                  <li className="py-3 px-4 h-12 leading-12 transition duration-200  ">
-                    <NavLink to={"saleslist"}>판매리스트</NavLink>
+                  <li
+                    className="py-3 px-4 h-12 leading-12 transition duration-200"
+                    onClick={moveAdd}
+                  >
+                    물품등록하기
                   </li>
                   <li className="py-3 px-4 h-12 leading-12 transition duration-200 ">
                     회원탈퇴

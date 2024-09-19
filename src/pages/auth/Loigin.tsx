@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup/src/yup.js";
 import { useForm } from "react-hook-form";
 import { loginValidaton } from "./validation";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type LoginData = {
   user_email: string;
@@ -12,11 +12,13 @@ const Login = () => {
   const navigate = useNavigate()
 
   const { register, handleSubmit, reset , formState: { errors }} = useForm<LoginData>({
+    mode: 'onChange',
     resolver : yupResolver(loginValidaton)
   });
 
   const loginForm = (data: LoginData) => {
     console.log(data);
+    
     reset();
     navigate('/')
   };
@@ -63,12 +65,18 @@ const Login = () => {
               />
                   {errors.user_password && <p className="text-red-500 text-sm">{errors.user_password.message}</p>}
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col items-center justify-between">
               <button
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-[480px] h-[50px]"
               >
                 로그인
+              </button>
+              <button
+                type="button"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-[480px] h-[50px]"
+                >
+                <Link to={'/join'}>회원가입</Link>
               </button>
             </div>
           </form>

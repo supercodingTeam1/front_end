@@ -8,7 +8,7 @@ import Join from "../pages/auth/Join";
 import Checkout from "../pages/Checkout";
 import Mypage from "../pages/myPage";
 import { AddProduct } from "../pages/manageProduct/AddProduct";
-import MySellerList from "../pages/myPage/mylist/mysellerlist";
+// import MySellerList from "../pages/myPage/mylist/mysellerlist";
 import MyOrderList from "../pages/myPage/mylist/myorderlist";
 import Home from "../pages/home";
 import RouteBanner from "../layout/RouteBanner";
@@ -94,10 +94,10 @@ const router = createBrowserRouter([
         path: "mypage",
         element: <Mypage />,
         children: [
-          {
-            path: "saleslist",
-            element: <MySellerList />,
-          },
+          // {
+          //   path: "saleslist",
+          //   element: <MySellerList />,
+          // },
           {
             path: "orderlist",
             element: <MyOrderList />,
