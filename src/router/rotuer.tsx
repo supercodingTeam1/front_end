@@ -67,10 +67,10 @@ const router = createBrowserRouter([
         path: "mypage",
         element: <Mypage />,
         children: [
-          {
-            path: "saleslist",
-            element: <MySellerList />,
-          },
+          // {
+          //   path: "saleslist",
+          //   element: <MySellerList />,
+          // },
           {
             path: "orderlist",
             element: <MyOrderList />,

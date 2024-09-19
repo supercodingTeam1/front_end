@@ -12,11 +12,13 @@ const Login = () => {
   const navigate = useNavigate()
 
   const { register, handleSubmit, reset , formState: { errors }} = useForm<LoginData>({
+    mode: 'onChange',
     resolver : yupResolver(loginValidaton)
   });
 
   const loginForm = (data: LoginData) => {
     console.log(data);
+    
     reset();
     navigate('/')
   };

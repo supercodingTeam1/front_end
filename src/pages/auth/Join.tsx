@@ -14,6 +14,7 @@ type FormData = {
   user_address: string;
   user_phone: string;
   user_profile : FileList;
+  isSeller : boolean;
 };
 
 
@@ -24,23 +25,52 @@ const Join = () => {
   const [address, setAddress ] = useState('')
   const [isModal, setIsModal] = useState(false);
   const  [imgPre, setImgPre] =useState('');
+  const [isSeller, setIsSeller] = useState(false)
 
-  const {register, handleSubmit, formState: { errors },watch } = useForm<FormData>({
+  const {register, handleSubmit, formState: { errors },watch , setValue } = useForm<FormData>({
+    mode: 'onChange',
     resolver: yupResolver(joinValidation)
   });
 
 
   const hadleAddressSelect = ( selectAddress : string) => {
     setAddress(selectAddress)
+    setValue('user_address', selectAddress);
   }
 
 
 
 
 
-  const joinForm = (data: FormData) => {
+  const joinForm = async (data: FormData) => {
     console.log(data) 
-    navigate('/login')
+    const role = isSeller ? 'seller' : 'buyer';
+    const userData = {
+      email : data.user_email,
+      password : data.user_password,
+      name :data.user_name,
+      address : address,
+      phoneNum : data.user_phone,
+      userprofile : data.user_profile[0],
+      role : role
+    }
+      navigate('/login')
+      console.log(userData)
+    // try{
+    //   // 서버통신
+    //   // 이미지 파일 보내기 
+    //   // const formData = new FormData();
+    //   // Object.keys(userData).forEach(key => {
+    //   // formData.append(key, userData[key])
+    //   console.log(userData)
+    //   navigate('/login')
+    // })
+
+
+    // }catch(error){
+
+    // }
+
   }
 
   const userprofile = watch('user_profile')
@@ -98,8 +128,13 @@ const Join = () => {
             name="user_email"
             required
             placeholder="이메일을 입력해주세요"
-            className=" p-2 border border-gray-300 rounded-md w-[480px] h-[50px]"
+            className=" p-2 border border-gray-300 rounded-md w-[333px] h-[50px]"
           />
+          <button
+            type="button"
+            className="ml-1 w-[135px] h-[50px]  border border-gray-300  rounded-md  hover:bg-blue-500 hover:text-white">
+            중복확인
+          </button>
           {errors.user_email && <p className="text-red-500 text-sm mt-2">{errors.user_email.message}</p>}
         </label>
 
@@ -136,7 +171,7 @@ const Join = () => {
         <label className="block mb-4">
           <span className="block text-sm  text-gray-700 mb-1 font-bold">주소</span>
           <input
-          {...register('user_address')}
+            {...register('user_address')}
             type="text"
             name="user_address"
             value={address}
@@ -165,6 +200,17 @@ const Join = () => {
             className=" p-2 border border-gray-300 rounded-md w-[480px] h-[50px]"
           />
           {errors.user_phone && <p className="text-red-500 text-sm mt-2">{errors.user_phone.message}</p>}
+        </label>
+
+
+        <label className="block mb-4 flex gap-4">
+          <span className="block text-sm text-gray-700 mb-1 font-bold">판매자 여부</span>
+          <input
+          {...register('isSeller')}
+            type="checkbox"
+            name="isSeller"
+            className="h-5 w-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+          />
         </label>
 
 
