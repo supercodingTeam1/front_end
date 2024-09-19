@@ -9,25 +9,23 @@ export default function Pagination(props: IPaginationProps) {
   return (
     <ReactPaginate
       breakLabel="..."
-      nextLabel="next >"
+      nextLabel=">"
       onPageChange={props.onChange}
       pageRangeDisplayed={5}
       marginPagesDisplayed={2}
       pageCount={10}
-      previousLabel="< previous"
+      previousLabel="<"
       renderOnZeroPageCount={null}
       containerClassName={"flex justify-center items-center space-x-2"}
-      pageClassName={"px-4 py-2 border rounded  cursor-pointer"}
-      activeClassName={"bg-blue-500 text-white"}
+      pageClassName={"px-3 py-1 border  cursor-pointer active:opacity-50"}
+      activeClassName={"bg-black text-white active:opacity-50"}
       previousClassName={
-        "px-4 py-2 border rounded hover:bg-gray-100 cursor-pointer"
+        "px-3 py-1 border rounded bg-black text-white hover:bg-gray cursor-pointer"
       }
       nextClassName={
-        "px-4 py-2 border rounded hover:bg-gray-100 cursor-pointer"
+        "px-3 py-1 border rounded bg-black text-white hover:bg-gray cursor-pointer"
       }
-      breakClassName={
-        "px-4 py-2 border rounded hover:bg-gray-100 cursor-pointer"
-      }
+      breakClassName={"px-3 py-1 hover:text-gray cursor-pointer"}
     />
   );
 }
