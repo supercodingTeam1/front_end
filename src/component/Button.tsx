@@ -19,7 +19,7 @@ export default function Button({
       className={
         `px-6 py-2 transition-colors rounded-full   ${
           primary
-            ? "bg-black text-white hover:bg-gray"
+            ? "bg-[#000] text-white hover:bg-gray"
             : "bg-white text-[#000] border border-[#000] hover:opacity-50"
         }` +
         " " +

@@ -11,15 +11,15 @@ export default function Home(props: IHomeProps) {
   return (
     <div>
       <Suspense fallback="loading">
-        <div className="flex px-10 transiton">
+        <div className="flex px-10 ">
           <img src={HomeBanner1} className="w-1/2 -translate-y-[0px] " />
           <img src={HomeBanner2} className="w-1/2 -translate-y-[0px] " />
         </div>
+        <div className="px-10">
+          <Categories />
+          <BestRank />
+        </div>
       </Suspense>
-      <MxLayout>
-        <Categories />
-        <BestRank />
-      </MxLayout>
     </div>
   );
 }

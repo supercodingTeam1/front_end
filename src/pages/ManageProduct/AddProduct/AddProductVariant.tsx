@@ -1,5 +1,4 @@
 import { useState } from "react";
-import step2 from "../../../assets/step2.png";
 import Published from "../../../assets/published.png";
 import Button from "../../../component/Button";
 import { useLocation, useNavigate } from "react-router-dom";

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-import step1 from "../../../assets/step1.png";
 import Button from "../../../component/Button";
 import { Link } from "react-router-dom";
 
