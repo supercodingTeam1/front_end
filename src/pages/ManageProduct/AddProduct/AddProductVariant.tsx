@@ -1,12 +1,13 @@
 import { useState } from "react";
 import step2 from "../../../assets/step2.png";
 import Published from "../../../assets/published.png";
+import Button from "../../../component/Button";
+import { useLocation, useNavigate } from "react-router-dom";
 
-interface IAddProductVariantProps {
-  previousPage: () => void;
-}
+interface IAddProductVariantProps {}
 
 export default function AddProductVariant(props: IAddProductVariantProps) {
+  const navigate = useNavigate();
   const sizes = [
     220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290,
     295, 300,
@@ -66,19 +67,10 @@ export default function AddProductVariant(props: IAddProductVariantProps) {
         </div>
       </div>
       <div className="absolute bottom-10 right-10 space-x-4">
-        <button
-          onClick={props.previousPage}
-          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 "
-        >
-          뒤로 가기
-        </button>
-        <button
-          onClick={handlePublish}
-          type="submit"
-          className=" bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 "
-        >
+        <Button onClick={() => navigate(-1)}>뒤로 가기</Button>
+        <Button onClick={handlePublish} primary>
           게시
-        </button>
+        </Button>
       </div>
 
       {showModal && (
@@ -91,12 +83,9 @@ export default function AddProductVariant(props: IAddProductVariantProps) {
             />
             <h2 className="text-2xl font-bold mb-4">게시 성공!</h2>
             <p className="mb-4">상품이 성공적으로 게시되었습니다.</p>
-            <button
-              onClick={() => setShowModal(false)}
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
-            >
+            <Button onClick={() => setShowModal(false)} primary>
               확인
-            </button>
+            </Button>
           </div>
         </div>
       )}

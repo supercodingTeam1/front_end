@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
 import step1 from "../../../assets/step1.png";
+import Button from "../../../component/Button";
+import { Link } from "react-router-dom";
 
-interface IAddProductInfoProps {
-  nextPage: () => void;
-}
+interface IAddProductInfoProps {}
 
 export default function AddProductInfo(props: IAddProductInfoProps) {
   const [images, setImages] = useState<string[]>([]);
@@ -132,13 +132,9 @@ export default function AddProductInfo(props: IAddProductInfoProps) {
             아동
           </label>
         </div>
-
-        <button
-          onClick={props.nextPage}
-          className=" bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 absolute bottom-10 right-10"
-        >
-          다음
-        </button>
+        <Link to="/manage/add/variant">
+          <Button primary>다음</Button>
+        </Link>
       </form>
     </div>
   );

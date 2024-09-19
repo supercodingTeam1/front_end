@@ -14,6 +14,10 @@ import Home from "../pages/home";
 import RouteBanner from "../layout/RouteBanner";
 import ProductList from "../pages/ProductList";
 import Header from "../component/HeadNavBar";
+import SideNavLayout from "../pages/manageProduct/SideNavLayout";
+import Products from "../pages/manageProduct/Products";
+import AddProductInfo from "../pages/ManageProduct/AddProduct/AddProductInfo";
+import AddProductVariant from "../pages/ManageProduct/AddProduct/AddProductVariant";
 
 const router = createBrowserRouter([
   {
@@ -45,28 +49,39 @@ const router = createBrowserRouter([
         path: "detail/:productId",
         element: <Detail />,
       },
-      {
-        path: "add-product",
-        element: <AddProduct />,
-      },
       // {
-      //   path: "manage",
-      //   element: <SideNav />,
-      //   children: [
-      //     {
-      //       index: true,
-      //       element: <Navigate to="products" replace />,
-      //     },
-      //     {
-      //       path: "products",
-      //       element: <Products />,
-      //     },
-      //     {
-      //       path: "add",
-      //       element: <AddProduct />,
-      //     },
-      //   ],
+      //   path: "add-product",
+      //   element: <AddProduct />,
       // },
+      {
+        path: "manage",
+        element: <SideNavLayout />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="products" replace />,
+          },
+          {
+            path: "products",
+            element: <Products />,
+          },
+          {
+            path: "add",
+            // element: <AddProduct />,
+            children: [
+              { index: true, element: <Navigate to="info" replace /> },
+              {
+                path: "info",
+                element: <AddProductInfo />,
+              },
+              {
+                path: "variant",
+                element: <AddProductVariant />,
+              },
+            ],
+          },
+        ],
+      },
       {
         path: "login",
         element: <Login />,

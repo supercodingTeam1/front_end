@@ -69,33 +69,31 @@ export default function Products() {
       <h1 className="text-2xl font-bold mb-4">제품 목록</h1>
       <table className="w-full border-collapse border">
         <thead>
-          <tr className="bg-gray-100">
-            <th className="border p-2">이미지</th>
-            <th className="border p-2">제품명</th>
-            <th className="border p-2">카테고리</th>
-            <th className="border p-2">가격</th>
-            <th className="border p-2">옵션</th>
+          <tr className="bg-black text-white">
+            <th>이미지</th>
+            <th>제품명</th>
+            <th>카테고리</th>
+            <th>가격</th>
+            <th>옵션</th>
           </tr>
         </thead>
         <tbody>
           {products.map((product) => (
             <React.Fragment key={product.item_id}>
               <tr className="border">
-                <td className="border p-2">
+                <td>
                   <img
                     src={product.item_image}
                     alt={product.item_name}
                     className="w-20 h-20 object-cover rounded-md mx-auto"
                   />
                 </td>
-                <td className="border p-2">{product.item_name}</td>
-                <td className="border p-2">{product.category}</td>
-                <td className="border p-2">
-                  {product.price.toLocaleString()}원
-                </td>
-                <td className="border p-2">
+                <td>{product.item_name}</td>
+                <td>{product.category}</td>
+                <td>{product.price.toLocaleString()}원</td>
+                <td>
                   <button
-                    className="text-blue-500 hover:text-blue-700"
+                    className="text-tahiti hover:text-blue-700"
                     onClick={() =>
                       setExpandedProduct(
                         expandedProduct === product.item_id

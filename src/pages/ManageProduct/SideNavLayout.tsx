@@ -5,7 +5,7 @@ export default function SideNavLayout() {
   const location = useLocation();
 
   return (
-    <div className="flex h-screen ">
+    <div className="flex border-t border-gray">
       <nav className="w-64 bg-white shadow-lg">
         <div className="p-5">
           <h1 className="text-2xl font-bold text-gray-800 mb-5">판매자 패널</h1>
@@ -16,12 +16,12 @@ export default function SideNavLayout() {
                 className={({ isActive }) =>
                   `block py-2 px-4 rounded transition duration-200 ${
                     isActive
-                      ? "bg-blue-500 text-white"
-                      : "text-gray-700 hover:bg-blue-500 hover:text-white"
+                      ? "bg-black text-white"
+                      : "text-gray hover:bg-black hover:text-white"
                   }`
                 }
               >
-                제품 목록
+                판매상품
               </NavLink>
             </li>
             <li>
@@ -30,12 +30,12 @@ export default function SideNavLayout() {
                 className={({ isActive }) =>
                   `block py-2 px-4 rounded transition duration-200 ${
                     isActive
-                      ? "bg-blue-500 text-white"
-                      : "text-gray-700 hover:bg-blue-500 hover:text-white"
+                      ? "bg-black text-white"
+                      : "text-gray hover:bg-black hover:text-white"
                   }`
                 }
               >
-                제품 추가
+                상품추가
               </NavLink>
             </li>
           </ul>

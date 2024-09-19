@@ -4,20 +4,23 @@ export interface IButtonProps {
   primary?: boolean;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 export default function Button({
   primary = false,
   children,
   className,
+  onClick,
 }: IButtonProps) {
   return (
     <button
+      onClick={onClick}
       className={
         `px-6 py-2 transition-colors rounded-full   ${
           primary
-            ? "bg-[#000] text-white hover:bg-gray"
-            : "bg-white text-[#000]"
+            ? "bg-black text-white hover:bg-gray"
+            : "bg-white text-[#000] border border-[#000] hover:opacity-50"
         }` +
         " " +
         className
