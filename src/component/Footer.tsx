@@ -2,7 +2,7 @@ import MxLayout from "../layout/MxLayout";
 
 export default function Footer() {
   return (
-    <div className=" border-t border-gray-light">
+    <div className=" border-t border-gray-light mt-8">
       <MxLayout>
         <div className="flex justify-between">
           <div className="">

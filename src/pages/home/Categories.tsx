@@ -15,7 +15,7 @@ export default function App(props: IAppProps) {
           return (
             <div className="flex flex-col gap-2 cursor-pointer relative">
               <img src={v} className="w-[360px]" />
-              <span className="text-xl absolute bottom-2 left-2">
+              <span className="absolute bottom-2 left-2">
                 {" "}
                 <Button className="border-none">Running</Button>
               </span>

@@ -18,6 +18,7 @@ import SideNavLayout from "../pages/manageProduct/SideNavLayout";
 import Products from "../pages/manageProduct/Products";
 import AddProductInfo from "../pages/ManageProduct/AddProduct/AddProductInfo";
 import AddProductVariant from "../pages/ManageProduct/AddProduct/AddProductVariant";
+import OrderCompleted from "../pages/OrderCompleted";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
             element: <ProductList />,
           },
         ],
+      },
+      {
+        path: "order-completed",
+        element: <OrderCompleted />,
       },
       {
         path: "detail/:productId",
