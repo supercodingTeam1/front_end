@@ -1,10 +1,42 @@
 import * as React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Button from "../../../component/Button";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { productInfoAtom } from "../../../recoil/uploadProduct/atom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup/src/yup.js";
+import { infoValidation } from "./validation";
+
+export interface IProductInfo {
+  item_name: string;
+  price: number;
+  category_type: string;
+  category_gender: string;
+  description: string;
+}
+
+// 다음 페이지 버튼 클릭시 필드값 전역상태에 저장
+// add variant 페이지에서 뒤로가기로 다시 이 페이지 진입시 전역상태 값을 읽고 default 값으로 설정.
 
 export default function AddProductInfo() {
+  const navigate = useNavigate();
   const [images, setImages] = useState<string[]>([]);
-  const [gender, setGender] = useState<string>("");
+  const [productInfo, setProductInfo] = useRecoilState(productInfoAtom);
+
+  React.useEffect(() => {
+    setImages(productInfo.item_image);
+  }, []);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IProductInfo>({
+    mode: "onChange",
+    resolver: yupResolver(infoValidation),
+  });
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && images.length < 5) {
@@ -16,27 +48,47 @@ export default function AddProductInfo() {
     setImages(images.filter((_, i) => i !== index));
   };
 
-  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGender(e.target.value);
+  const handleNext = (data: IProductInfo) => {
+    setProductInfo({ ...data, item_image: images });
+    navigate("/manage/add/variant");
   };
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">제품 정보</h1>
-      <form className="space-y-6">
+      {JSON.stringify(productInfo)}
+      <h1 className="flex justify-center items-center mb-6 text-2xl">STEP 1</h1>
+      <form className="flex flex-col gap-6" onSubmit={handleSubmit(handleNext)}>
         <input
+          {...register("item_name")}
+          defaultValue={productInfo.item_name}
           type="text"
           placeholder="제품명"
-          required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-tahiti"
         />
+        <p className="text-tahiti text-sm">{errors.item_name?.message}</p>
+        <input
+          {...register("price")}
+          defaultValue={productInfo.price}
+          type="number"
+          placeholder="제품 가격"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-tahiti"
+        />
+        <p className="text-tahiti text-sm">{errors.price?.message}</p>
+        {/* image */}
+        <div className="flex flex-col gap-3">
+          <label
+            htmlFor="image-upload"
+            className="bg-[#000] text-white w-[100px] flex items-center justify-center py-2 rounded-full cursor-pointer"
+          >
+            이미지 선택
+          </label>
 
-        <div>
           <input
+            id="image-upload"
             type="file"
             onChange={handleImageUpload}
             accept="image/*"
-            className="mb-2"
+            className="hidden"
           />
           <div className="flex flex-wrap gap-2 mb-2">
             {images.map((img, index) => (
@@ -49,7 +101,7 @@ export default function AddProductInfo() {
                 <button
                   type="button"
                   onClick={() => handleImageDelete(index)}
-                  className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                  className="absolute -top-1 -right-1 bg-tahiti text-white rounded-full w-5 h-5 flex items-center justify-center"
                 >
                   X
                 </button>
@@ -59,79 +111,70 @@ export default function AddProductInfo() {
           <p className="text-sm text-gray-600">
             최대 5개의 이미지를 업로드할 수 있습니다. (현재 {images.length}/5)
           </p>
+          {images.length === 0 && (
+            <p className="text-tahiti text-sm">이미지를 선택해 주세요</p>
+          )}
         </div>
-
-        <input
-          type="number"
-          placeholder="제품 가격"
-          required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
+        {/* description */}
         <textarea
+          {...register("description")}
+          defaultValue={productInfo.description}
           placeholder="제품 설명"
-          required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-tahiti h-32"
         ></textarea>
+        <p className="text-tahiti text-sm">{errors.description?.message}</p>
 
         <select
-          required
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          {...register("category_type")}
+          defaultValue={productInfo.category_type}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-tahiti"
         >
           <option value="">카테고리 선택</option>
           <option value="sneakers">스니커즈</option>
           <option value="sandals">샌들</option>
           <option value="running">런닝</option>
-          {/* 필요한 카테고리를 추가하세요 */}
         </select>
+        <p className="text-tahiti text-sm">{errors.category_type?.message}</p>
 
-        <div className="space-y-2">
-          <p className="font-medium">성별</p>
-          <div className="flex space-x-4">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                checked={gender === "male"}
-                onChange={handleGenderChange}
-                className="mr-2"
-              />
-              남성
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                checked={gender === "female"}
-                onChange={handleGenderChange}
-                className="mr-2"
-              />
-              여성
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="gender"
-                value="kids"
-                checked={gender === "kids"}
-                onChange={handleGenderChange}
-                className="mr-2"
-              />
-              아동
-            </label>
-          </div>
-        </div>
+        <fieldset className="flex gap-4">
+          <label className="flex items-center">
+            <input
+              {...register("category_gender")}
+              defaultChecked={productInfo.category_gender === "male"}
+              type="radio"
+              value="male"
+              className="mr-2"
+            />
+            남성
+          </label>
 
-        <Link to={`/manage/add-variant`}>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
-          >
-            다음
-          </button>
-        </Link>
+          <label className="flex items-center">
+            <input
+              {...register("category_gender")}
+              defaultChecked={productInfo.category_gender === "female"}
+              type="radio"
+              value="female"
+              className="mr-2"
+            />
+            여성
+          </label>
+          <label className="flex items-center">
+            <input
+              {...register("category_gender")}
+              defaultChecked={productInfo.category_gender === "kids"}
+              type="radio"
+              value="kids"
+              className="mr-2"
+            />
+            아동
+          </label>
+          <p className="text-tahiti text-sm">
+            {errors.category_gender?.message}
+          </p>
+        </fieldset>
+        <Button primary type="submit">
+          다음
+        </Button>
       </form>
     </div>
   );

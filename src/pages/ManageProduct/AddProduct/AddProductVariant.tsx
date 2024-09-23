@@ -1,79 +1,87 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import Published from "../../../assets/published.png";
+import Button from "../../../component/Button";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import {
+  productInfoAtom,
+  productVariantAtom,
+} from "../../../recoil/uploadProduct/atom";
+import VariantSet from "./VariantSet";
+import { uploadProduct } from "../../../api/manageProductApi.js";
+
+const sizes = [
+  220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290,
+  295, 300,
+];
 
 export default function AddProductVariant() {
-  const sizes = [230, 240, 250, 260, 270, 280, 290, 300, 310, 320, 330, 340];
-  const [selectedSizes, setSelectedSizes] = useState<number[]>([]);
-  const [inventory, setInventory] = useState<{ [key: number]: number }>({});
+  const navigate = useNavigate();
 
-  const handleSizeToggle = (size: number) => {
-    setSelectedSizes((prev) =>
-      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
-    );
-  };
+  const [showModal, setShowModal] = useState(false);
 
-  const handleInventoryChange = (size: number, value: string) => {
-    setInventory((prev) => ({ ...prev, [size]: parseInt(value) || 0 }));
-  };
+  const productVariant = useRecoilValue(productVariantAtom);
+  const productInfo = useRecoilValue(productInfoAtom);
 
   const handlePublish = () => {
-    console.log("선택된 사이즈:", selectedSizes);
-    console.log("재고:", inventory);
-    // 여기에 게시 로직 추가
+    const checkedVariant = productVariant.filter((v) => v.isChecked === true);
+    console.log(checkedVariant);
+    if (checkedVariant.length === 0) {
+      return;
+    } else {
+      //   const options = checkedVariant.map((v) => {
+      //     delete v.isChecked;
+      //     return v;
+      //   });
+      const data = { ...productInfo, options: checkedVariant };
+      console.log(data);
+      // request
+      uploadProduct(data);
+      setShowModal(true);
+    }
+  };
+
+  const handleConfirm = () => {
+    setShowModal(false);
+    navigate("/manage");
   };
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <button
-        onClick={() => window.history.back()}
-        className="mb-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-      >
-        뒤로 가기
-      </button>
-      <h1 className="text-2xl font-bold mb-6">제품 옵션 추가</h1>
-
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-3">사이즈 선택</h2>
-        <div className="flex flex-wrap gap-2">
-          {sizes.map((size) => (
-            <button
-              key={size}
-              onClick={() => handleSizeToggle(size)}
-              className={`px-4 py-2 rounded ${
-                selectedSizes.includes(size)
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 hover:bg-gray-300"
-              }`}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-3">재고 입력</h2>
-        <div className="space-y-2">
-          {selectedSizes.map((size) => (
-            <div key={size} className="flex items-center">
-              <label className="w-24">사이즈 {size}:</label>
-              <input
-                type="number"
-                value={inventory[size] || ""}
-                onChange={(e) => handleInventoryChange(size, e.target.value)}
-                min="0"
-                className="border rounded px-2 py-1 w-24"
-              />
+      {JSON.stringify(productVariant)}
+      <h1 className="flex justify-center items-center mb-6 text-2xl">STEP 2</h1>
+      <form className="flex flex-col gap-6">
+        <div className="grid grid-cols-3 gap-8">
+          {sizes.map((size, index) => (
+            <div key={size}>
+              <VariantSet size={size} />
             </div>
           ))}
         </div>
-      </div>
+        <div className="flex justify-between">
+          <Button onClick={() => navigate(-1)}>뒤로 가기</Button>
+          <Button onClick={handlePublish} primary>
+            게시
+          </Button>
+        </div>
+      </form>
 
-      <button
-        onClick={handlePublish}
-        className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        게시
-      </button>
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-8 rounded-lg text-center">
+            <img
+              src={Published}
+              alt="Published"
+              className="mx-auto mb-4 w-24"
+            />
+            <h2 className="text-2xl font-bold mb-4">게시 성공!</h2>
+            <p className="mb-4">상품이 성공적으로 게시되었습니다.</p>
+            <Button onClick={handleConfirm} primary>
+              확인
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
