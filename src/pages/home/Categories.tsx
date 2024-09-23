@@ -1,6 +1,6 @@
-import running from "../../assets/running.jpg";
-import sandals from "../../assets/sandals.jpg";
-import sneakers from "../../assets/sneakers.jpg";
+import running from "../../assets/running.webp";
+import sandals from "../../assets/sandals.webp";
+import sneakers from "../../assets/sneakers.webp";
 import Button from "../../component/Button";
 
 export interface IAppProps {}
