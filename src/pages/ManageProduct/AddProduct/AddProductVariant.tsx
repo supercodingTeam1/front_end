@@ -1,76 +1,70 @@
 import { useState } from "react";
 import Published from "../../../assets/published.png";
 import Button from "../../../component/Button";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import {
+  productInfoAtom,
+  productVariantAtom,
+} from "../../../recoil/uploadProduct/atom";
+import VariantSet from "./VariantSet";
+import { uploadProduct } from "../../../api/manageProductApi.js";
 
-interface IAddProductVariantProps {}
+const sizes = [
+  220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290,
+  295, 300,
+];
 
-export default function AddProductVariant(props: IAddProductVariantProps) {
+export default function AddProductVariant() {
   const navigate = useNavigate();
-  const sizes = [
-    220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290,
-    295, 300,
-  ];
-  const [selectedSizes, setSelectedSizes] = useState<number[]>([]);
-  const [inventory, setInventory] = useState<{ [key: number]: number }>({});
+
   const [showModal, setShowModal] = useState(false);
 
-  const handleSizeToggle = (size: number) => {
-    setSelectedSizes((prev) =>
-      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
-    );
-  };
-
-  const handleInventoryChange = (size: number, value: string) => {
-    setInventory((prev) => ({ ...prev, [size]: parseInt(value) || 0 }));
-  };
+  const productVariant = useRecoilValue(productVariantAtom);
+  const productInfo = useRecoilValue(productInfoAtom);
 
   const handlePublish = () => {
-    console.log("선택된 사이즈:", selectedSizes);
-    console.log("재고:", inventory);
-    // 여기에 게시 로직 추가
-    setShowModal(true);
+    const checkedVariant = productVariant.filter((v) => v.isChecked === true);
+    console.log(checkedVariant);
+    if (checkedVariant.length === 0) {
+      return;
+    } else {
+      //   const options = checkedVariant.map((v) => {
+      //     delete v.isChecked;
+      //     return v;
+      //   });
+      const data = { ...productInfo, options: checkedVariant };
+      console.log(data);
+      // request
+      uploadProduct(data);
+      setShowModal(true);
+    }
+  };
+
+  const handleConfirm = () => {
+    setShowModal(false);
+    navigate("/manage");
   };
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <div className="flex justify-center items-center mb-6">
-        <img src={step2} alt="step2" className="w-2/3" />
-      </div>
-
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-3">사이즈 선택 및 재고 입력</h2>
-        <div className="grid grid-cols-2 gap-4">
+      {JSON.stringify(productVariant)}
+      <h1 className="flex justify-center items-center mb-6 text-2xl">STEP 2</h1>
+      <form className="flex flex-col gap-6">
+        <div className="grid grid-cols-3 gap-8">
           {sizes.map((size, index) => (
-            <div key={size} className="flex items-center">
-              <input
-                type="checkbox"
-                id={`size-${size}`}
-                checked={selectedSizes.includes(size)}
-                onChange={() => handleSizeToggle(size)}
-                className="mr-2"
-              />
-              <label htmlFor={`size-${size}`} className="mr-4">
-                {size}
-              </label>
-              <input
-                type="number"
-                value={inventory[size] || ""}
-                onChange={(e) => handleInventoryChange(size, e.target.value)}
-                min="0"
-                className="border rounded px-2 py-1 w-24"
-                placeholder="재고"
-              />
+            <div key={size}>
+              <VariantSet size={size} />
             </div>
           ))}
         </div>
-      </div>
-      <div className="absolute bottom-10 right-10 space-x-4">
-        <Button onClick={() => navigate(-1)}>뒤로 가기</Button>
-        <Button onClick={handlePublish} primary>
-          게시
-        </Button>
-      </div>
+        <div className="flex justify-between">
+          <Button onClick={() => navigate(-1)}>뒤로 가기</Button>
+          <Button onClick={handlePublish} primary>
+            게시
+          </Button>
+        </div>
+      </form>
 
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -82,7 +76,7 @@ export default function AddProductVariant(props: IAddProductVariantProps) {
             />
             <h2 className="text-2xl font-bold mb-4">게시 성공!</h2>
             <p className="mb-4">상품이 성공적으로 게시되었습니다.</p>
-            <Button onClick={() => setShowModal(false)} primary>
+            <Button onClick={handleConfirm} primary>
               확인
             </Button>
           </div>

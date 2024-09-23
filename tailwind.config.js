@@ -19,6 +19,7 @@ export default {
       green: "#13ce66",
       yellow: "#ffc82c",
       gray: "#707072",
+      red: "C7253E",
       "gray-dark": "#273444",
       "gray-light": "#d3dce6",
       "bubble-gum": "#ff77e9",

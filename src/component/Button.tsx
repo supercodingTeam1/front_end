@@ -5,6 +5,7 @@ export interface IButtonProps {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 export default function Button({
@@ -12,9 +13,11 @@ export default function Button({
   children,
   className,
   onClick,
+  type = "button",
 }: IButtonProps) {
   return (
     <button
+      type={type}
       onClick={onClick}
       className={
         `px-6 py-2 transition-colors rounded-full   ${

@@ -1,20 +1,32 @@
 import { atom } from "recoil";
-
-interface Option {
-  option_id: string;
-  option_name: string;
+interface Options {
+  size: number;
   stock: number;
+  isChecked: boolean;
 }
 
-interface IProduct {
-  item_id: number;
-  category: string;
-  option: Option[];
-  item_image: string;
+interface ProductInfo {
   item_name: string;
-  price: number;
+  price: number | string;
+  category_type: string;
+  category_gender: string;
+  description: string;
+  item_image: string[];
 }
-export const productAddAtom = atom({
-  key: "productAdd",
-  default: {},
+
+export const productInfoAtom = atom<ProductInfo>({
+  key: "productInfoAtom",
+  default: {
+    item_name: "",
+    price: "",
+    category_type: "",
+    category_gender: "",
+    description: "",
+    item_image: [],
+  },
+});
+
+export const productVariantAtom = atom<Options[]>({
+  key: "productVariantAtom",
+  default: [],
 });

@@ -6,7 +6,7 @@ export default function SideNavLayout() {
 
   return (
     <div className="flex border-t border-gray">
-      <nav className="w-64 bg-white shadow-lg">
+      <nav className="w-64 shadow-lg">
         <div className="p-5">
           <h1 className="text-2xl font-bold text-gray-800 mb-5">판매자 패널</h1>
           <ul className="space-y-2">
