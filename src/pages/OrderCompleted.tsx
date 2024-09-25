@@ -3,9 +3,7 @@ import MxLayout from "../layout/MxLayout";
 import Button from "../component/Button";
 import { Link } from "react-router-dom";
 
-export interface IOrderCompletedProps {}
-
-export default function OrderCompleted(props: IOrderCompletedProps) {
+export default function OrderCompleted() {
   return (
     <MxLayout>
       <div className="flex flex-col items-center justify-center">

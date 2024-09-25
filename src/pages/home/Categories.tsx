@@ -5,7 +5,7 @@ import Button from "../../component/Button";
 
 export interface IAppProps {}
 
-export default function App(props: IAppProps) {
+export default function App() {
   const category = [running, sandals, sneakers];
   return (
     <>

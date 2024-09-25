@@ -17,7 +17,7 @@ export default function ProductList(props: IProductListProps) {
       <MxLayout>
         {/* list */}
         <div className="flex  flex-wrap gap-x-3 gap-y-6">
-          {products.map((item) => {
+          {products.map(() => {
             return <ItemCard />;
           })}
         </div>

@@ -8,8 +8,8 @@ import infinity from "../../assets/infinity.png";
 
 export interface IBestRankProps {}
 
-export default function BestRank(props: IBestRankProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function BestRank() {
+  const [_, setCurrentIndex] = useState(0);
   const settings = {
     infinite: true,
     speed: 1000,
@@ -31,7 +31,7 @@ export default function BestRank(props: IBestRankProps) {
       <h1 className="text-2xl pt-12 pb-4 pl-4 font-bold">Best Seller</h1>
 
       <Slider {...settings} className="">
-        {items.map((item, index) => {
+        {items.map((item) => {
           return (
             <div className="px-2 cursor-pointer">
               <img src={item} className="w-full h-[400px] object-conver"></img>

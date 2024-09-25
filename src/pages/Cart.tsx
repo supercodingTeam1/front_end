@@ -9,7 +9,7 @@ export default function Cart() {
   const price = 150000;
   const item = [1, 2, 3];
 
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  // const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   const total = price * quantity;
 
@@ -35,7 +35,7 @@ export default function Cart() {
             <div className="w-1/5">총계</div>
           </div>
           {/* 테이블 목록 */}
-          {item.map((v) => {
+          {item.map(() => {
             return (
               <div className="flex items-center overflow-x-auto mb-4 border-b border-black">
                 <div className="w-2/5 flex items-center justify-center">

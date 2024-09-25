@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 import Button from "../component/Button";
 import MxLayout from "../layout/MxLayout";
 
-export interface ICheckoutProps {}
-
-export default function Checkout(props: ICheckoutProps) {
+export default function Checkout() {
   const products = [
     { name: "Product 1", price: 100, quantity: 1, option: "option1" },
     { name: "Product 2", price: 200, quantity: 1, option: "option2" },

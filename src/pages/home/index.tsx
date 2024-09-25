@@ -5,7 +5,7 @@ import homeBanner2 from "../../assets/HomeBanner2.webp";
 
 export interface IHomeProps {}
 
-export default function Home(props: IHomeProps) {
+export default function Home() {
   return (
     <div>
       <div className="flex px-10 ">
