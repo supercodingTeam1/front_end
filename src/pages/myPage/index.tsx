@@ -20,7 +20,7 @@ const Mypage = () => {
         <div className="flex gap-10 overflow-hidden">
           <div className="h-full w-[260px]  rounded-md border border-black border-solid">
             <div className="flex-1 flex-col ">
-              <h2 className=" px-4 bg-indigo-100 py-5 rounded-t-md  border-b border-black border-solid text-xl uppercase font-bold">
+              <h2 className=" px-4 bg-gray-light py-5 rounded-t-md  border-b border-black border-solid text-xl uppercase font-bold">
                 menu
               </h2>
               <nav className="py-6">

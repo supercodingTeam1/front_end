@@ -2,9 +2,12 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup";
 import { joinValidation } from "./validation";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import defaultImg from '../../assets/DefaultUser.png'
 import AddressSearchModal from "../../layout/AddressSearchModal";
+import Button from "../../component/Button";
+import { signup } from "../../api/userApi";
+
 
 type FormData = {
   user_name: string;
@@ -15,7 +18,10 @@ type FormData = {
   user_phone: string;
   user_profile : FileList;
   isSeller : boolean;
+  
 };
+
+
 
 
 
@@ -24,7 +30,6 @@ const Join = () => {
   const navigate = useNavigate()
   const [address, setAddress ] = useState('')
   const [isModal, setIsModal] = useState(false);
-  const  [imgPre, setImgPre] =useState('');
   const [isSeller, setIsSeller] = useState(false)
 
   const {register, handleSubmit, formState: { errors },watch , setValue } = useForm<FormData>({
@@ -39,48 +44,69 @@ const Join = () => {
   }
 
 
+  const formatPhoneNumber = (value: string) => {
+    // 숫자만 추출
+    const cleaned = ('' + value).replace(/\D/g, '');
+    // 하이픈 추가
+    const match = cleaned.match(/^(\d{3})(\d{4})(\d{4})$/);
+    if (match) {
+      return `${match[1]}-${match[2]}-${match[3]}`;
+    }
+    return value;
+  };
+  
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedPhoneNumber = formatPhoneNumber(e.target.value);
+    setValue('user_phone', formattedPhoneNumber);
+  };
 
 
 
   const joinForm = async (data: FormData) => {
-    console.log(data) 
-    const role = isSeller ? 'seller' : 'buyer';
-    const userData = {
-      email : data.user_email,
-      password : data.user_password,
-      name :data.user_name,
-      address : address,
-      phoneNum : data.user_phone,
-      userprofile : data.user_profile[0],
-      role : role
-    }
-      navigate('/login')
-      console.log(userData)
-    // try{
-    //   // 서버통신
-    //   // 이미지 파일 보내기 
-    //   // const formData = new FormData();
-    //   // Object.keys(userData).forEach(key => {
-    //   // formData.append(key, userData[key])
-    //   console.log(userData)
-    //   navigate('/login')
-    // })
 
+   // roles를 빈 배열로 초기화
 
-    // }catch(error){
+  const roles: string[] = []; 
 
-    // }
-
+   // isSeller에 따라 역할을 추가
+  if (isSeller) {
+    roles.push('ROLE_SELLER');
+  } else {
+    roles.push('ROLE_BUYER');
   }
 
+  const newForm = {
+    user_email :  data.user_email,
+    user_password : data.user_password,
+    user_name : data.user_name,
+    user_address : address,
+    user_phone : data.user_phone,
+    user_gender: '여성'
+  }
+
+  // FormData 생성
+  const formData = new FormData();
+
+  formData.append('profileImage', data.user_profile[0])
+  formData.append('request',JSON.stringify({
+    ...newForm,
+    roles, 
+  }))
+
+  try {
+    const res = await signup(formData);
+    console.log('응답', res);
+    navigate('/login');
+  } catch (error) {
+    console.log(error);
+  }
+  }
+  
+
+
   const userprofile = watch('user_profile')
-  useEffect(() => {
-    if(userprofile && userprofile.length > 0){
-      const file = userprofile[0]
-      const objectUrl = URL.createObjectURL(file);
-      setImgPre(objectUrl)
-    }
-  },[userprofile])
+  
+
 
   return (
     <>
@@ -90,7 +116,7 @@ const Join = () => {
 
 
         <label htmlFor="profile" className="cursor-pointer  text-sm  text-gray-700  font-bold">유저 프로필
-            <img src={imgPre || defaultImg} className="border border-gray-300 rounded-md w-[50px] h-[50px]"></img>
+            <img src={ userprofile ? URL.createObjectURL(userprofile[0]) :  defaultImg} className="border border-gray-300 rounded-md w-[50px] h-[50px]"></img>
         </label>
         <input 
           className="hidden"
@@ -130,11 +156,11 @@ const Join = () => {
             placeholder="이메일을 입력해주세요"
             className=" p-2 border border-gray-300 rounded-md w-[333px] h-[50px]"
           />
-          <button
-            type="button"
+          <Button
+            primary={true}
             className="ml-1 w-[135px] h-[50px]  border border-gray-300  rounded-md  hover:bg-blue-500 hover:text-white">
             중복확인
-          </button>
+          </Button>
           {errors.user_email && <p className="text-red-500 text-sm mt-2">{errors.user_email.message}</p>}
         </label>
 
@@ -179,11 +205,11 @@ const Join = () => {
             required
             className="p-2 border border-gray-300 rounded-md w-[333px] h-[50px]"
           />
-          <button
-            type="button"
+          <Button
+            primary={true}
             onClick={() => setIsModal(true)}
             className="ml-1 w-[135px] h-[50px]  border border-gray-300  rounded-md  hover:bg-blue-500 hover:text-white">
-            주소찾기</button>
+            주소찾기</Button>
           {errors.user_address && <p className="text-red-500 text-sm mt-2">{errors.user_address.message}</p>}
         </label>
 
@@ -197,6 +223,7 @@ const Join = () => {
             name="user_phone"
             placeholder="핸드폰번호를 입력해주세요"
             required
+            onChange={handlePhoneChange}
             className=" p-2 border border-gray-300 rounded-md w-[480px] h-[50px]"
           />
           {errors.user_phone && <p className="text-red-500 text-sm mt-2">{errors.user_phone.message}</p>}
@@ -209,19 +236,23 @@ const Join = () => {
           {...register('isSeller')}
             type="checkbox"
             name="isSeller"
-            onChange={() => setIsSeller(!isSeller)} 
+            onChange={() => {
+              setIsSeller(!isSeller);
+              setValue('isSeller', !isSeller); // 상태와 함께 업데이트
+            }}
             className="h-5 w-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
           />
         </label>
 
 
 
-        <button 
-          type="submit" 
+        <Button 
+          primary={true}
+          type="submit"
           className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600  w-[480px] h-[50px] font-bold"
         >
           회원가입
-        </button>
+        </Button>
       </form>
 
 
@@ -229,6 +260,7 @@ const Join = () => {
         isModal={isModal}
         onClose={()=> setIsModal(false)}
         hadleAddressSelect={hadleAddressSelect}
+        address={address}
       />
     </div>
     </>

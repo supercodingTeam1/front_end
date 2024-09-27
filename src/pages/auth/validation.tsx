@@ -31,7 +31,12 @@ export const joinValidation = yup.object().shape({
   .required('핸드폰 번호를입력해주세요')
     .matches(/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/, "번호를 정확히 입력해 주세요."),
 
-  user_profile: yup.mixed().required('이미지를 업로드해 주세요')
+  user_profile: yup.mixed()
+  .test('fileType', 'Invalid file type', (value) => {
+    return value && value instanceof FileList; // FileList 타입인지 체크
+  })
+  .required('Profile image is required'),
+  isSeller: yup.boolean().optional(), 
 });
 
 

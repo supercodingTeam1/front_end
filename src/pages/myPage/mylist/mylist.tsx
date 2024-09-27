@@ -11,10 +11,10 @@ const location = useLocation()
     <>
       <div className="border-t border-black pt-5">
         <p className="mb-5 font-bold">
-          {location.pathname === '/mypage' ? '주문내역 또는 판매내역' : ''}
+          {location.pathname === '/mypage' ? '주문내역' : ''}
         </p>
         <div className="">
-          <div className="bg-indigo-100 py-4 px-6">
+          <div className="bg-gray-light py-4 px-6">
             <ul className="flex justify-around">
               <li className="">주문번호</li>
               <li className="">이미지</li>
