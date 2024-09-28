@@ -33,10 +33,17 @@ export default function AddProductVariant() {
       //     delete v.isChecked;
       //     return v;
       //   });
-      const data = { ...productInfo, options: checkedVariant };
-      console.log(data);
+      const productData = { ...productInfo, options: checkedVariant };
+      const formData = new FormData();
+
+      productInfo.item_image.forEach((image)=>{
+        formData.append("item_image", image);
+      })
+      formData.append("request", new Blob([JSON.stringify(productData)], {type : "application/json"}));
+
+      console.log(productData);
       // request
-      uploadProduct(data);
+      uploadProduct(formData);
       setShowModal(true);
     }
   };

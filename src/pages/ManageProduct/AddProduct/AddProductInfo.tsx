@@ -21,7 +21,7 @@ export interface IProductInfo {
 
 export default function AddProductInfo() {
   const navigate = useNavigate();
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<File[]>([]);
   const [productInfo, setProductInfo] = useRecoilState(productInfoAtom);
 
   React.useEffect(() => {
@@ -40,7 +40,8 @@ export default function AddProductInfo() {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && images.length < 5) {
-      setImages([...images, URL.createObjectURL(e.target.files[0])]);
+      const se = e.target.files[0];
+      setImages([...images, se]);
     }
   };
 
@@ -94,7 +95,7 @@ export default function AddProductInfo() {
             {images.map((img, index) => (
               <div key={index} className="relative">
                 <img
-                  src={img}
+                  src={URL.createObjectURL(img)}
                   alt={`제품 이미지 ${index + 1}`}
                   className="w-24 h-24 object-cover rounded-md"
                 />
