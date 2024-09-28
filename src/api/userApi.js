@@ -10,18 +10,19 @@ export const signup = async (data) => {
 
 
 //이메일 체크아웃 
-export const checkemail = async (email) => {
+export const checkemail = async (data) => {
   return instance.post('/auth/duplicate',{
-    user_email : email
+    user_email : data.user_email
   })
 }
 
 // 로그인 
-export const login = async (email, pw) => {
-  const res = instance.post('auth/login', {
-    user_name : email,
-    user_password: pw
-  })
+export const login = async (data) => {
+  return instance.post('/auth/login', {
+    user_name : data.user_email,
+    user_password: data.user_password
+  },
+)
 
   //로직추가  jwt / 리프레쉬 고민. .. 
 }

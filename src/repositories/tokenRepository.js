@@ -1,6 +1,6 @@
-const ACCESS_TOKEN  = 'acessToken';
+const ACCESS_TOKEN  = 'X-AUTH-TOKEN';
 
-const tokenRepo = {
+export const tokenRepo = {
   //토큰을 저장 
   setToken(token){
     localStorage.setItem(ACCESS_TOKEN, token)

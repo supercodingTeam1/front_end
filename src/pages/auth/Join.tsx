@@ -7,6 +7,7 @@ import defaultImg from '../../assets/DefaultUser.png'
 import AddressSearchModal from "../../layout/AddressSearchModal";
 import Button from "../../component/Button";
 import { signup } from "../../api/userApi";
+import { formatPhoneNumber } from "../../util/phoneUtil";
 
 
 type FormData = {
@@ -31,6 +32,8 @@ const Join = () => {
   const [address, setAddress ] = useState('')
   const [isModal, setIsModal] = useState(false);
   const [isSeller, setIsSeller] = useState(false)
+  // const [isCheckEmail, setIsCheckEmail] = useState(false);
+
 
   const {register, handleSubmit, formState: { errors },watch , setValue } = useForm<FormData>({
     mode: 'onChange',
@@ -38,23 +41,27 @@ const Join = () => {
   });
 
 
+  //이메일 체크아웃 
+  // const handleCheckEmail = async () => {
+  //   const email = watch('user_email');
+  //   const isDuplicate  = await checkemail(email)
+  //   if(isDuplicate && isDuplicate.status  === 400){
+  //     alert(isDuplicate.message)
+  //     setIsCheckEmail(false)
+  //   }else{
+  //     alert(isDuplicate.message)
+  //     setIsCheckEmail(true)
+  //   }
+  // }
+
+  //주소 받아오기 
   const hadleAddressSelect = ( selectAddress : string) => {
     setAddress(selectAddress)
     setValue('user_address', selectAddress);
   }
 
 
-  const formatPhoneNumber = (value: string) => {
-    // 숫자만 추출
-    const cleaned = ('' + value).replace(/\D/g, '');
-    // 하이픈 추가
-    const match = cleaned.match(/^(\d{3})(\d{4})(\d{4})$/);
-    if (match) {
-      return `${match[1]}-${match[2]}-${match[3]}`;
-    }
-    return value;
-  };
-  
+  //핸드폰 번호 - 넣기 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formattedPhoneNumber = formatPhoneNumber(e.target.value);
     setValue('user_phone', formattedPhoneNumber);
@@ -63,6 +70,11 @@ const Join = () => {
 
 
   const joinForm = async (data: FormData) => {
+  
+  // if(!isCheckEmail){
+  //   alert('이메일 중복확인을 진행해주세요')
+  //   return
+  // }
 
    // roles를 빈 배열로 초기화
 
@@ -81,7 +93,6 @@ const Join = () => {
     user_name : data.user_name,
     user_address : address,
     user_phone : data.user_phone,
-    user_gender: '여성'
   }
 
   // FormData 생성
@@ -99,13 +110,17 @@ const Join = () => {
     navigate('/login');
   } catch (error) {
     console.log(error);
+    alert('회원가입을 다시 시도해주세요')
   }
   }
   
 
 
   const userprofile = watch('user_profile')
-  
+    // FileList 객체가 존재하고, 첫 번째 파일이 존재하는지 확인
+    const profileImageUrl = userprofile && userprofile.length > 0 
+    ? URL.createObjectURL(userprofile[0])
+    : defaultImg;
 
 
   return (
@@ -116,7 +131,7 @@ const Join = () => {
 
 
         <label htmlFor="profile" className="cursor-pointer  text-sm  text-gray-700  font-bold">유저 프로필
-            <img src={ userprofile ? URL.createObjectURL(userprofile[0]) :  defaultImg} className="border border-gray-300 rounded-md w-[50px] h-[50px]"></img>
+            <img src={ profileImageUrl} className="border border-gray-300 rounded-md w-[50px] h-[50px]"></img>
         </label>
         <input 
           className="hidden"
@@ -158,7 +173,9 @@ const Join = () => {
           />
           <Button
             primary={true}
-            className="ml-1 w-[135px] h-[50px]  border border-gray-300  rounded-md  hover:bg-blue-500 hover:text-white">
+            className="ml-1 w-[135px] h-[50px]  border border-gray-300  rounded-md  hover:bg-blue-500 hover:text-white"
+            // onClick={() => handleCheckEmail()}
+            >
             중복확인
           </Button>
           {errors.user_email && <p className="text-red-500 text-sm mt-2">{errors.user_email.message}</p>}
