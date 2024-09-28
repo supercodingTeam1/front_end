@@ -1,7 +1,7 @@
 import axios from "axios";
 // import { localToken } from "../../utils/auth";
 
-const base_url = "http://15.165.190.65:8080/";
+const base_url = "http://15.165.190.65:8080";
 
 //인스턴스 생성
 const instance = axios.create({
@@ -23,16 +23,18 @@ instance.interceptors.request.use(
     // 헤더에 토큰 추가
 
     // const token = localToken.get();
+    const token =
+      "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjgsInN1YiI6IjgiLCJpc3MiOiJzdXBlcmNvZGluZyBhcHAiLCJpYXQiOjE3Mjc0OTMyMzIsImV4cCI6MTcyNzQ5NjgzMn0.mEV25E2j1W9Y2K6ifPr6QjjRuY0GqeK_C7bVSlKYeB3KbNwYBMq-aY5pWggdkSqyGqC11VopHjxP2nxoeCPtsw";
 
-    // let auth = "";
+    let auth = "";
 
-    // if (token) {
-    //   auth = "Bearer " + token;
-    // }
+    if (token) {
+      auth = "Bearer " + token;
+    }
 
-    // if (auth) {
-    //   config.headers.Authorization = auth;
-    // }
+    if (auth) {
+      config.headers["X-AUTH-TOKEN"] = token;
+    }
 
     return config;
   },

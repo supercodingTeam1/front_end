@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import { useState } from "react";
 import Button from "../../../component/Button";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +8,12 @@ import { productInfoAtom } from "../../../recoil/uploadProduct/atom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/src/yup.js";
 import { infoValidation } from "./validation";
+import {
+  getMypage,
+  getSellItems,
+  uploadProduct,
+} from "../../../api/manageProductApi";
+import { signup } from "../../../api/userApi";
 
 export interface IProductInfo {
   item_name: string;
@@ -26,6 +33,12 @@ export default function AddProductInfo() {
 
   React.useEffect(() => {
     setImages(productInfo.item_image);
+  }, []);
+
+  React.useEffect(() => {
+    // uploadProduct();
+    getSellItems();
+    getMypage();
   }, []);
 
   const {

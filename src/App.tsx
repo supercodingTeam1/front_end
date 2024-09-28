@@ -4,13 +4,6 @@ import Footer from "./component/Footer";
 import { useEffect } from "react";
 
 function App() {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    console.log("scrol");
-    window.scrollTo(0, 0); // 페이지 최상단으로 스크롤
-  }, [pathname]);
-
   return (
     <>
       <Header />
