@@ -99,6 +99,7 @@ class Http {
       url,
       data: formData,
       headers: {
+        "X-AUTH-TOKEN": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjQsInN1YiI6IjQiLCJpc3MiOiJzdXBlcmNvZGluZyBhcHAiLCJpYXQiOjE3Mjc1MDExNTAsImV4cCI6MTcyNzUwNDc1MH0.TjF1bDxDaqu9S3YN9F3LTdY-n_28qI5hWMV2AFwqlm9Gn05IMI-aW2exlOaeltC-9w-HU0Er_Y_Mez_GtZPTRQ",
         "Content-Type": "multipart/form-data",
       },
     });

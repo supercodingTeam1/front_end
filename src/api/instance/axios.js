@@ -1,7 +1,7 @@
 import axios from "axios";
 // import { localToken } from "../../utils/auth";
 
-const base_url = "http://15.165.190.65:8080/";
+const base_url = "http://localhost:8080/";
 
 //인스턴스 생성
 const instance = axios.create({
