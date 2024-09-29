@@ -3,6 +3,10 @@ import { useForm } from "react-hook-form";
 import { loginValidaton } from "./validation";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../component/Button";
+import { login } from "../../api/userApi";
+import { tokenRepo } from "../../repositories/tokenRepository";
+
+
 
 type LoginData = {
   user_email: string;
@@ -10,6 +14,8 @@ type LoginData = {
 };
 
 const Login = () => {
+  const token = import.meta.env.VITE_X_AUTH_TOKEN;
+
   const navigate = useNavigate()
 
   const { register, handleSubmit, reset , formState: { errors }} = useForm<LoginData>({
@@ -17,9 +23,14 @@ const Login = () => {
     resolver : yupResolver(loginValidaton)
   });
 
-  const loginForm = (data: LoginData) => {
-    console.log(data);
-    
+  const loginForm = async (data: LoginData) => {
+    tokenRepo.setToken(token)
+    const res = await login(data);
+    console.log(res);
+
+    // 로컬호스트 등록
+
+    // ROLE 아톰 등록 
     reset();
     navigate('/')
   };
@@ -68,6 +79,7 @@ const Login = () => {
             </div>
             <div className="flex flex-col items-center justify-between">
               <Button 
+                type="submit"
                 primary={true}
                 className=" font-bold focus:outline-none focus:shadow-outline w-[480px] h-[50px] mb-3"
               >
