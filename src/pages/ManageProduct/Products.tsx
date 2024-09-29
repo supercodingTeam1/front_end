@@ -1,49 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getSellItems } from "../../api/manageProductApi";
 
 interface Option {
   option_id: string;
   option_name: string;
   stock: number;
 }
+interface Category {
+  category_gender: string;
+  category_type: string;
+}
 
 interface Product {
   item_id: number;
-  category: string;
-  option: Option[];
+  category: Category[];
+  options: Option[];
   item_image: string;
   item_name: string;
   price: number;
 }
 
-const productsData: Product[] = [
-  {
-    item_id: 1,
-    category: "스니커즈",
-    option: [
-      { option_id: "a1", option_name: "240", stock: 100 },
-      { option_id: "a2", option_name: "235", stock: 80 },
-      { option_id: "a3", option_name: "250", stock: 120 },
-    ],
-    item_image: "https://example.com/sneakers1.jpg",
-    item_name: "나이키 에어맥스 90",
-    price: 129000,
-  },
-  {
-    item_id: 2,
-    category: "부츠",
-    option: [
-      { option_id: "b1", option_name: "240", stock: 50 },
-      { option_id: "b2", option_name: "250", stock: 70 },
-    ],
-    item_image: "https://example.com/boots1.jpg",
-    item_name: "팀버랜드 클래식 부츠",
-    price: 219000,
-  },
-];
-
 export default function Products() {
-  const [products, setProducts] = useState<Product[]>(productsData);
+  const [products, setProducts] = useState<Product[]>([]);
   const [expandedProduct, setExpandedProduct] = useState<number | null>(null);
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
+  const getItems = async () => {
+    try {
+      const res = await getSellItems();
+      if (res.status === 200) {
+        setProducts(res.allSalesItemDTOList);
+      }
+    } catch {
+      console.log("errrrrrrr");
+    }
+  };
 
   const handleStockChange = (
     productId: number,
@@ -55,7 +49,7 @@ export default function Products() {
         product.item_id === productId
           ? {
               ...product,
-              option: product.option.map((opt) =>
+              option: product.options.map((opt) =>
                 opt.option_id === optionId ? { ...opt, stock: newStock } : opt
               ),
             }
@@ -89,7 +83,10 @@ export default function Products() {
                   />
                 </td>
                 <td>{product.item_name}</td>
-                <td>{product.category}</td>
+                <td>
+                  {product.category.category_gender}{" "}
+                  {product.category.category_type}
+                </td>
                 <td>{product.price.toLocaleString()}원</td>
                 <td>
                   <button
@@ -112,7 +109,7 @@ export default function Products() {
                 <tr>
                   <td colSpan={5} className="border p-2">
                     <div className="mt-2">
-                      {product.option.map((opt) => (
+                      {product.options.map((opt) => (
                         <div
                           key={opt.option_id}
                           className="flex items-center mb-2"

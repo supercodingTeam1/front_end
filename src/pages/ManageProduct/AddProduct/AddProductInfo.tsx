@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import { useState } from "react";
 import Button from "../../../component/Button";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +7,7 @@ import { productInfoAtom } from "../../../recoil/uploadProduct/atom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/src/yup.js";
 import { infoValidation } from "./validation";
-import {
-  getMypage,
-  getSellItems,
-  uploadProduct,
-} from "../../../api/manageProductApi";
-import { signup } from "../../../api/userApi";
+import { getSellItems } from "../../../api/manageProductApi";
 
 export interface IProductInfo {
   item_name: string;
@@ -28,17 +22,11 @@ export interface IProductInfo {
 
 export default function AddProductInfo() {
   const navigate = useNavigate();
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<File[]>([]);
   const [productInfo, setProductInfo] = useRecoilState(productInfoAtom);
 
   React.useEffect(() => {
     setImages(productInfo.item_image);
-  }, []);
-
-  React.useEffect(() => {
-    // uploadProduct();
-    getSellItems();
-    getMypage();
   }, []);
 
   const {
@@ -53,7 +41,7 @@ export default function AddProductInfo() {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && images.length < 5) {
-      setImages([...images, URL.createObjectURL(e.target.files[0])]);
+      setImages([...images, e.target.files[0]]);
     }
   };
 
@@ -68,7 +56,6 @@ export default function AddProductInfo() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      {JSON.stringify(productInfo)}
       <h1 className="flex justify-center items-center mb-6 text-2xl">STEP 1</h1>
       <form className="flex flex-col gap-6" onSubmit={handleSubmit(handleNext)}>
         <input
@@ -107,7 +94,7 @@ export default function AddProductInfo() {
             {images.map((img, index) => (
               <div key={index} className="relative">
                 <img
-                  src={img}
+                  src={URL.createObjectURL(img)}
                   alt={`제품 이미지 ${index + 1}`}
                   className="w-24 h-24 object-cover rounded-md"
                 />
