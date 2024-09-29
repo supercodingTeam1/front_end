@@ -130,9 +130,9 @@ export default function AddProductInfo() {
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-tahiti"
         >
           <option value="">카테고리 선택</option>
-          <option value="sneakers">스니커즈</option>
-          <option value="sandals">샌들</option>
-          <option value="running">런닝</option>
+          <option value="스니커즈">스니커즈</option>
+          <option value="샌들">샌들</option>
+          <option value="런닝">런닝</option>
         </select>
         <p className="text-tahiti text-sm">{errors.category_type?.message}</p>
 
@@ -140,9 +140,9 @@ export default function AddProductInfo() {
           <label className="flex items-center">
             <input
               {...register("category_gender")}
-              defaultChecked={productInfo.category_gender === "male"}
+              defaultChecked={productInfo.category_gender === "남성"}
               type="radio"
-              value="male"
+              value="남성"
               className="mr-2"
             />
             남성
@@ -151,9 +151,9 @@ export default function AddProductInfo() {
           <label className="flex items-center">
             <input
               {...register("category_gender")}
-              defaultChecked={productInfo.category_gender === "female"}
+              defaultChecked={productInfo.category_gender === "여성"}
               type="radio"
-              value="female"
+              value="여성"
               className="mr-2"
             />
             여성
@@ -161,9 +161,9 @@ export default function AddProductInfo() {
           <label className="flex items-center">
             <input
               {...register("category_gender")}
-              defaultChecked={productInfo.category_gender === "kids"}
+              defaultChecked={productInfo.category_gender === "아동"}
               type="radio"
-              value="kids"
+              value="아동"
               className="mr-2"
             />
             아동
