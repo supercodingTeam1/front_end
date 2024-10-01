@@ -1,5 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
-import shoe from "../assets/shoe.png";
+import { Link } from "react-router-dom";
 
 interface IOptionProps {
   option_id: number;
@@ -13,7 +12,7 @@ interface Categorys {
 }
 interface IItemCardProps {
   item_id: number;
-  category: Categorys[];
+  category: Categorys;
   option: IOptionProps[];
   item_image: string;
   item_name: string;

@@ -1,14 +1,14 @@
 import * as React from "react";
 import ItemCard from "../../component/ItemCard";
 import MxLayout from "../../layout/MxLayout";
-import Pagination from "../../component/Pagination";
+// import Pagination from "../../component/Pagination";
 import CardFilter from "../CardFilter";
 import { getItemList } from "../../api/productApi";
 
 export interface IProductListProps {}
 
-export default function ProductList(props: IProductListProps) {
-  const [page, setPage] = React.useState(1);
+export default function ProductList() {
+  const [page, _] = React.useState(1);
   const [products, setProducts] = React.useState([]);
   const shoeSizes = [210, 220, 230, 240, 250, 260, 270, 280, 290];
 
@@ -36,9 +36,7 @@ export default function ProductList(props: IProductListProps) {
           })}
         </div>
         {/* pagination */}
-        <div className="my-10">
-          <Pagination />
-        </div>
+        <div className="my-10">{/* <Pagination /> */}</div>
       </MxLayout>
     </div>
   );

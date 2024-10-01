@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getItemDetails } from "../api/productApi";
@@ -8,23 +7,47 @@ import { useParams } from "react-router-dom";
 import Button from "../component/Button";
 import { addToCart } from "../api/cartApi";
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: false,
-  autoplaySpeed: 2000,
-  centerMode: true,
-  centerPadding: "0",
-};
+// const settings = {
+//   dots: true,
+//   infinite: true,
+//   speed: 500,
+//   slidesToShow: 1,
+//   slidesToScroll: 1,
+//   autoplay: false,
+//   autoplaySpeed: 2000,
+//   centerMode: true,
+//   centerPadding: "0",
+// };
 
+interface Option {
+  optionId: string;
+  size: number;
+}
+// interface Category {
+//   category_gender: string;
+//   category_type: string;
+// }
+
+interface Product {
+  item_id: number | string;
+  option: Option[];
+  item_images: string[];
+  item_name: string;
+  price: number | string;
+  description: string;
+}
 export default function Detail() {
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const [product, setProduct] = useState([]);
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [product, setProduct] = useState<Product>({
+    item_id: "",
+    option: [],
+    item_images: [],
+    item_name: "",
+    price: "",
+    description: "",
+  });
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   useEffect(() => {
     requestDetail();
@@ -61,7 +84,7 @@ export default function Detail() {
   return (
     <div className="flex flex-col lg:flex-row gap-12 items-center justify-center p-8 bg-blue-100">
       {/* <Slider {...settings} className="w-96 h-96"> */}
-      {product.item_images?.map((image, index) => (
+      {product.item_images?.map((image) => (
         <img src={image} className="object-contain w-96 h-96" />
       ))}
       {/* </Slider> */}

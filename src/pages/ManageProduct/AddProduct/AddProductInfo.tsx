@@ -7,7 +7,6 @@ import { productInfoAtom } from "../../../recoil/uploadProduct/atom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/src/yup.js";
 import { infoValidation } from "./validation";
-import { getSellItems } from "../../../api/manageProductApi";
 
 export interface IProductInfo {
   item_name: string;
@@ -32,7 +31,7 @@ export default function AddProductInfo() {
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm<IProductInfo>({
     mode: "onChange",

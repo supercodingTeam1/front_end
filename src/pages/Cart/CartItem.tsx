@@ -1,6 +1,18 @@
 import * as React from "react";
+import { editItemQuantity } from "../../api/cartApi";
+import useEffectOnUpdates from "../../hooks/useEffectOnUpdates";
 
-export interface ICartItemProps {}
+export interface ICartItemProps {
+  cart_id: number;
+  item_image: string;
+  item_name: string;
+  size: number;
+  quantity: number;
+  price: number;
+  option_id: number;
+  deleteItem: () => void;
+  reFetchCartItems: () => void;
+}
 
 export default function CartItem({
   cart_id,
@@ -9,8 +21,27 @@ export default function CartItem({
   size,
   quantity,
   price,
+  option_id,
+  deleteItem,
+  reFetchCartItems,
 }: ICartItemProps) {
   const [itemQuantity, setItemQuantity] = React.useState(quantity);
+
+  const editQuantity = async () => {
+    const res = await editItemQuantity({
+      cart_id,
+      option_id,
+      quantity: itemQuantity,
+    });
+    if (res.status === 200) {
+      reFetchCartItems();
+    }
+  };
+
+  useEffectOnUpdates(() => {
+    editQuantity();
+  }, [itemQuantity]);
+
   return (
     <div
       className="flex items-center overflow-x-auto mb-4 border-b border-black"
@@ -38,10 +69,10 @@ export default function CartItem({
       </div>
 
       <div className="w-1/5 flex justify-center">
-        ₩ {price * itemQuantity}
+        ₩ {(price * itemQuantity).toLocaleString()}
         <div
           className="w-[20px] h-[20px] cursor-pointer translate-x-4"
-          //   onClick={handleDelete}
+          onClick={() => deleteItem()}
         >
           X
         </div>

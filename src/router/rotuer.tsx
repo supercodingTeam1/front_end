@@ -12,10 +12,10 @@ import MyOrderList from "../pages/myPage/mylist/myorderlist";
 import Home from "../pages/home";
 import RouteBanner from "../layout/RouteBanner";
 import ProductList from "../pages/ProductList";
-import SideNavLayout from "../pages/manageProduct/SideNavLayout";
-import Products from "../pages/manageProduct/Products";
-import AddProductInfo from "../pages/manageProduct/AddProduct/AddProductInfo";
-import AddProductVariant from "../pages/manageProduct/AddProduct/AddProductVariant";
+import SideNavLayout from "../pages/ManageProduct/SideNavLayout";
+import Products from "../pages/ManageProduct/Products";
+import AddProductInfo from "../pages/ManageProduct/AddProduct/AddProductInfo";
+import AddProductVariant from "../pages/ManageProduct/AddProduct/AddProductVariant";
 import OrderCompleted from "../pages/OrderCompleted";
 
 const router = createBrowserRouter([

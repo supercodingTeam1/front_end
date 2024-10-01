@@ -13,7 +13,7 @@ interface Category {
 
 interface Product {
   item_id: number;
-  category: Category[];
+  category: Category;
   options: Option[];
   item_image: string;
   item_name: string;
