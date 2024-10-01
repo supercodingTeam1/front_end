@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import shoe from "../assets/shoe.png";
 
 interface IOptionProps {
@@ -6,28 +6,39 @@ interface IOptionProps {
   option_name: string;
   stock: number;
 }
+interface Categorys {
+  categoryGender: string;
+  categoryId: number;
+  categoryType: string;
+}
 interface IItemCardProps {
   item_id: number;
-  category: "string";
+  category: Categorys[];
   option: IOptionProps[];
   item_image: string;
   item_name: string;
   price: string;
 }
 
-export default function ItemCard({ props }: IItemCardProps) {
+export default function ItemCard({ product }: { product: IItemCardProps }) {
   return (
-    <Link to="detail/1">
+    <Link to={`/detail/${product.item_id}`}>
       <div className="w-[200px] lg:w-[285px] flex flex-col bg-gray-100/50 cursor-pointer">
-        <img src={shoe} className="w-full h-[200px] lg:h-[285px]" />
+        <img
+          src={product.item_image}
+          className="w-full h-[200px] lg:h-[285px]"
+        />
         <div className="flex flex-col p-4 gap-4">
           <h1 className="text-sm md:text-md xl:text-2xl truncate">
-            nike infinity run 4 djkjflksjflskjflsjkdlskjflksjdflksj
+            {product.item_name}
           </h1>
           <span className="text-xs md:text-sm xl:text-base text-gray-400">
-            여성 스니커즈
+            {product.category.categoryGender}
+            {product.category.categoryType}
           </span>
-          <span className="text-xs md:text-base xl:text-xl">₩ 150,000</span>
+          <span className="text-xs md:text-base xl:text-xl">
+            ₩ {product.price}
+          </span>
         </div>
       </div>
     </Link>

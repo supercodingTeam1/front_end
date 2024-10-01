@@ -1,9 +1,12 @@
-import { useState } from "react";
-import shoe from "../assets/shoe.png";
-import infinity from "../assets/infinity.png";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getItemDetails } from "../api/productApi";
+import { useParams } from "react-router-dom";
+import Button from "../component/Button";
+import { addToCart } from "../api/cartApi";
 
 const settings = {
   dots: true,
@@ -13,39 +16,71 @@ const settings = {
   slidesToScroll: 1,
   autoplay: false,
   autoplaySpeed: 2000,
-  centerMode: true, // 가운데 모드 활성화
-  centerPadding: "0", // 양옆 여백 제거
+  centerMode: true,
+  centerPadding: "0",
 };
 
 export default function Detail() {
+  const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const sizes = ["S", "M", "L"];
-  const images = [shoe, infinity, shoe, infinity];
+  const [product, setProduct] = useState([]);
+  const [selectedSize, setSelectedSize] = useState(null);
+
+  useEffect(() => {
+    requestDetail();
+  }, []);
+
+  const requestDetail = async () => {
+    try {
+      const res = await getItemDetails({ item_id: productId });
+      if (res.status === 200) {
+        setProduct(res.item_detail);
+      }
+    } catch {}
+  };
+
+  const handleClickAdd = async () => {
+    if (selectedSize === null) return;
+    try {
+      const res = await addToCart({
+        option_id: selectedSize,
+        quantity: quantity,
+      });
+      if (res.status === 200) {
+        // toast
+
+        toast("장바구니에 추가되었습니다.");
+      }
+    } catch {}
+  };
+
+  useEffect(() => {
+    console.log(selectedSize);
+  }, [selectedSize]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-12 items-center justify-center p-8 bg-blue-100">
-      <Slider {...settings} className="w-96 h-96 bg-yellow-100">
-        {images.map((image) => (
-          <img src={image} className="object-contain w-96 h-96" />
-        ))}
-      </Slider>
+      {/* <Slider {...settings} className="w-96 h-96"> */}
+      {product.item_images?.map((image, index) => (
+        <img src={image} className="object-contain w-96 h-96" />
+      ))}
+      {/* </Slider> */}
       <section className="flex flex-col w-full lg:w-1/3 space-y-4">
         <h1 className="text-3xl font-bold">Asgaard 소파</h1>
         <h2 className="text-2xl font-semibold">250,000원</h2>
-        <p className="text-gray-600">
-          Setting the bar as one of the loudest speakers in its class, the
-          Kilburn is a compact, stout-hearted hero with a well-balanced audio
-          which boasts a clear midrange and extended highs for a sound.
-        </p>
+        <p className="text-gray-600">{product.description}</p>
         <div>
           <label className="block mb-2 font-semibold">사이즈</label>
           <div className="flex space-x-2">
-            {sizes.map((size) => (
+            {product.option?.map((item) => (
               <button
-                key={size}
-                className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+                key={item.optionId}
+                className={`px-4 py-2 border border-gray rounded hover:border-tahiti ${
+                  selectedSize === item.optionId ? "border-tahiti" : ""
+                }`}
+                onClick={() => setSelectedSize(item.optionId)}
               >
-                {size}
+                {item.size}
               </button>
             ))}
           </div>
@@ -69,15 +104,14 @@ export default function Detail() {
               +
             </button>
 
-            <button className="ml-4 px-4 py-2 border border-gray-500 text-gray-500 rounded hover:bg-gray-100">
+            <Button primary onClick={handleClickAdd} disabled={!selectedSize}>
               장바구니에 추가
-            </button>
-            <button className="px-4 py-2 border border-black text-black rounded hover:bg-gray-100">
-              지금 구매하기
-            </button>
+            </Button>
+            <Button>지금 구매하기</Button>
           </div>
         </div>
       </section>
+      <Toaster />
     </div>
   );
 }

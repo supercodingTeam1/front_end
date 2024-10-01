@@ -6,6 +6,7 @@ export interface IButtonProps {
   className?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset" | undefined;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -14,6 +15,7 @@ export default function Button({
   className,
   onClick,
   type = "button",
+  disabled = false,
 }: IButtonProps) {
   return (
     <button
@@ -24,10 +26,11 @@ export default function Button({
           primary
             ? "bg-[#000] text-white hover:bg-gray"
             : "bg-white text-[#000] border border-[#000] hover:opacity-50"
-        }` +
+        } ${disabled && "cursor-no-drop"}` +
         " " +
         className
       }
+      // disabled={disabled}
     >
       {children}
     </button>
