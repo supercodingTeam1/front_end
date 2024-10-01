@@ -1,10 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup/src/yup.js";
 import { useForm } from "react-hook-form";
-import { loginValidaton } from "./validation";
-import { Link, useNavigate } from "react-router-dom";
+
+import {  useNavigate } from "react-router-dom";
 import Button from "../../component/Button";
 import { login } from "../../api/userApi";
-import { tokenRepo } from "../../repositories/tokenRepository";
+import { loginValidaton } from "./validation";
+// import { tokenRepo } from "../../repositories/tokenRepository";
 
 
 
@@ -13,26 +14,25 @@ type LoginData = {
   user_password: string;
 };
 
+
 const Login = () => {
-  const token = import.meta.env.VITE_X_AUTH_TOKEN;
 
   const navigate = useNavigate()
 
-  const { register, handleSubmit, reset , formState: { errors }} = useForm<LoginData>({
+  const { register, handleSubmit , formState: { errors }, } = useForm<LoginData>({
     mode: 'onChange',
     resolver : yupResolver(loginValidaton)
   });
 
+
   const loginForm = async (data: LoginData) => {
-    tokenRepo.setToken(token)
-    const res = await login(data);
-    console.log(res);
-
-    // 로컬호스트 등록
-
-    // ROLE 아톰 등록 
-    reset();
-    navigate('/')
+  
+      const success= await login(data);
+      if(success === 200){
+        navigate('/')
+      }else{
+        alert('로그인을 다시 시도해주세요')
+      }
   };
 
   return (
@@ -88,8 +88,9 @@ const Login = () => {
               <Button
                 primary={true}
                 className="font-bold focus:outline-none focus:shadow-outline w-[480px] h-[50px]"
+                onClick={() => navigate('/join')}
                 >
-                <Link to={'/join'}>회원가입</Link>
+                회원가입
               </Button>
             </div>
           </form>

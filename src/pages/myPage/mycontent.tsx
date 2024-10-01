@@ -5,14 +5,13 @@ import MyUser from "./Myuserinfo"
 
 
 
-
-const MyContent = () => {
+const MyContent = ({mydata : userData}) => {
 
 
   return (
     <>
       <div className="py-5">
-        <MyUser/>
+        <MyUser mydata={mydata}/>
         <div className="w-full ">
             <MyTab />
             <MyList/>
