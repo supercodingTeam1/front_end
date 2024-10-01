@@ -1,5 +1,6 @@
 const ACCESS_TOKEN  = 'X-AUTH-TOKEN';
 const REFRESH_TOKEN = 'X-AUTH-REFRESHTOKEN'
+const USER_ROLE = 'role'
 
 export const tokenRepo = {
   //토큰을 저장 
@@ -28,5 +29,19 @@ export const tokenRepo = {
   //리프레쉬 토큰 지우기 
   removeRefreshToken(){
     localStorage.removeItem(REFRESH_TOKEN)
+  },
+
+  setUserRole(role){
+    localStorage.setItem(USER_ROLE,role)
+  },
+
+  getUserRole(){
+    localStorage.getItem(USER_ROLE)
+  },
+
+  removeUserRole(){
+    localStorage.removeItem(USER_ROLE)
   }
+
+
 }
