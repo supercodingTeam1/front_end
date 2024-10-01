@@ -1,4 +1,5 @@
 import axios from "axios";
+import { tokenRepo } from "../../repositories/tokenRepository";
 // import { localToken } from "../../utils/auth";
 
 const base_url = "http://15.165.190.65:8080";
@@ -23,8 +24,8 @@ instance.interceptors.request.use(
     // 헤더에 토큰 추가
 
     // const token = localToken.get();
-    const token =
-      "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjgsInN1YiI6IjgiLCJpc3MiOiJzdXBlcmNvZGluZyBhcHAiLCJpYXQiOjE3Mjc0OTMyMzIsImV4cCI6MTcyNzQ5NjgzMn0.mEV25E2j1W9Y2K6ifPr6QjjRuY0GqeK_C7bVSlKYeB3KbNwYBMq-aY5pWggdkSqyGqC11VopHjxP2nxoeCPtsw";
+    const token = tokenRepo.getToken()
+      // "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjgsInN1YiI6IjgiLCJpc3MiOiJzdXBlcmNvZGluZyBhcHAiLCJpYXQiOjE3Mjc0OTMyMzIsImV4cCI6MTcyNzQ5NjgzMn0.mEV25E2j1W9Y2K6ifPr6QjjRuY0GqeK_C7bVSlKYeB3KbNwYBMq-aY5pWggdkSqyGqC11VopHjxP2nxoeCPtsw";
 
     let auth = "";
 

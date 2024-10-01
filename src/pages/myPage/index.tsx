@@ -4,14 +4,41 @@ import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import MyContent from "./mycontent";
 import MxLayout from "../../layout/MxLayout";
+import { useEffect, useState } from "react";
+import { mypageUser } from "../../api/mypageApi";
+
+
+export type userData = {
+  name: string,
+  roles: string[],
+  user_id: number;
+
+}
+
 
 const Mypage = () => {
+  const [mydata, setMydata] = useState<userData | null>(null)
   const location = useLocation();
   const navigate = useNavigate();
 
   const moveAdd = () => {
     navigate("/add-product");
   };
+  
+
+  useEffect(()=>{
+    const userData = async () => {
+    try{
+      const res = await mypageUser()
+      console.log(res.MyUserInfo.data)
+      setMydata(res.MyUserInfo.data)
+    }
+    catch(error){
+      console.log(error)
+    }
+    }
+    userData()
+  },[])
 
 
   return (
@@ -48,7 +75,7 @@ const Mypage = () => {
             </div>
           </div>
           <div className="ml-15 flex-1">
-            {location.pathname === "/mypage" ? <MyContent /> : <Outlet />}
+            {location.pathname === "/mypage" ? <MyContent mydata={mydata} /> : <Outlet />}
           </div>
         </div>
       </MxLayout>
