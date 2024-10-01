@@ -17,7 +17,7 @@ export default function ProductList() {
   }, []);
   const getItems = async () => {
     try {
-      const res = await getItemList({ page: page, size: 24 });
+      const res = await getItemList({ page: page, size: 100 });
       setProducts(res.items.content);
     } catch {
       console.log("errr");
