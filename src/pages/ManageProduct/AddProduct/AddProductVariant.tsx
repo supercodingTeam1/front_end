@@ -23,21 +23,27 @@ export default function AddProductVariant() {
   const productVariant = useRecoilValue(productVariantAtom);
   const productInfo = useRecoilValue(productInfoAtom);
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
     const checkedVariant = productVariant.filter((v) => v.isChecked === true);
-    console.log(checkedVariant);
+
     if (checkedVariant.length === 0) {
       return;
     } else {
-      //   const options = checkedVariant.map((v) => {
-      //     delete v.isChecked;
-      //     return v;
-      //   });
+      const formData = new FormData();
+      productInfo.item_image.forEach((img) => {
+        formData.append("item_image", img);
+      });
+
       const data = { ...productInfo, options: checkedVariant };
-      console.log(data);
+      formData.append("request", JSON.stringify(data));
+
       // request
-      uploadProduct(data);
-      setShowModal(true);
+      try {
+        const res = await uploadProduct(formData);
+        if (res.status === 200) setShowModal(true);
+      } catch {
+      } finally {
+      }
     }
   };
 
@@ -48,11 +54,10 @@ export default function AddProductVariant() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      {JSON.stringify(productVariant)}
       <h1 className="flex justify-center items-center mb-6 text-2xl">STEP 2</h1>
       <form className="flex flex-col gap-6">
         <div className="grid grid-cols-3 gap-8">
-          {sizes.map((size, index) => (
+          {sizes.map((size) => (
             <div key={size}>
               <VariantSet size={size} />
             </div>

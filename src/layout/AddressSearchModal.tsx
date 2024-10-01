@@ -1,18 +1,28 @@
 import DaumPostcode from "react-daum-postcode";
 
+interface PostcodeData {
+  address: string;      // 기본 주소
+  jibunAddress: string; // 지번 주소
+}
+
 
 interface AddressSearchModalProps {
-  isOpen: boolean;
-  onClose: boolean;
-  onAddressSelect: string
+  isModal: boolean;
+  address: string;
+  onClose: () => void;  // onClose는 모달을 닫는 함수
+  hadleAddressSelect: (address: string) => void;  // 주소 선택 시 호출되는 함수
+  
 }
+
+
 
 
 
 const AddressSearchModal = ({isModal, onClose, hadleAddressSelect}:AddressSearchModalProps ) => {
 
-  const handleComplete = (data: any) => {
+  const handleComplete = (data: PostcodeData) => {
     hadleAddressSelect(data.address);
+    console.log(data)
     onClose();
   };
 

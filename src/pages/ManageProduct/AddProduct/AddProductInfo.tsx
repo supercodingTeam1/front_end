@@ -21,7 +21,7 @@ export interface IProductInfo {
 
 export default function AddProductInfo() {
   const navigate = useNavigate();
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<File[]>([]);
   const [productInfo, setProductInfo] = useRecoilState(productInfoAtom);
 
   React.useEffect(() => {
@@ -31,7 +31,7 @@ export default function AddProductInfo() {
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm<IProductInfo>({
     mode: "onChange",
@@ -40,7 +40,7 @@ export default function AddProductInfo() {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && images.length < 5) {
-      setImages([...images, URL.createObjectURL(e.target.files[0])]);
+      setImages([...images, e.target.files[0]]);
     }
   };
 
@@ -55,7 +55,6 @@ export default function AddProductInfo() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      {JSON.stringify(productInfo)}
       <h1 className="flex justify-center items-center mb-6 text-2xl">STEP 1</h1>
       <form className="flex flex-col gap-6" onSubmit={handleSubmit(handleNext)}>
         <input
@@ -94,7 +93,7 @@ export default function AddProductInfo() {
             {images.map((img, index) => (
               <div key={index} className="relative">
                 <img
-                  src={img}
+                  src={URL.createObjectURL(img)}
                   alt={`제품 이미지 ${index + 1}`}
                   className="w-24 h-24 object-cover rounded-md"
                 />
@@ -130,9 +129,9 @@ export default function AddProductInfo() {
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-tahiti"
         >
           <option value="">카테고리 선택</option>
-          <option value="sneakers">스니커즈</option>
-          <option value="sandals">샌들</option>
-          <option value="running">런닝</option>
+          <option value="스니커즈">스니커즈</option>
+          <option value="샌들">샌들</option>
+          <option value="런닝">런닝</option>
         </select>
         <p className="text-tahiti text-sm">{errors.category_type?.message}</p>
 
@@ -140,9 +139,9 @@ export default function AddProductInfo() {
           <label className="flex items-center">
             <input
               {...register("category_gender")}
-              defaultChecked={productInfo.category_gender === "male"}
+              defaultChecked={productInfo.category_gender === "남성"}
               type="radio"
-              value="male"
+              value="남성"
               className="mr-2"
             />
             남성
@@ -151,9 +150,9 @@ export default function AddProductInfo() {
           <label className="flex items-center">
             <input
               {...register("category_gender")}
-              defaultChecked={productInfo.category_gender === "female"}
+              defaultChecked={productInfo.category_gender === "여성"}
               type="radio"
-              value="female"
+              value="여성"
               className="mr-2"
             />
             여성
@@ -161,9 +160,9 @@ export default function AddProductInfo() {
           <label className="flex items-center">
             <input
               {...register("category_gender")}
-              defaultChecked={productInfo.category_gender === "kids"}
+              defaultChecked={productInfo.category_gender === "아동"}
               type="radio"
-              value="kids"
+              value="아동"
               className="mr-2"
             />
             아동

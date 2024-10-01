@@ -1,26 +1,38 @@
 import { yupResolver } from "@hookform/resolvers/yup/src/yup.js";
 import { useForm } from "react-hook-form";
+
+import {  useNavigate } from "react-router-dom";
+import Button from "../../component/Button";
+import { login } from "../../api/userApi";
 import { loginValidaton } from "./validation";
-import { Link, useNavigate } from "react-router-dom";
+// import { tokenRepo } from "../../repositories/tokenRepository";
+
+
 
 type LoginData = {
   user_email: string;
   user_password: string;
 };
 
+
 const Login = () => {
+
   const navigate = useNavigate()
 
-  const { register, handleSubmit, reset , formState: { errors }} = useForm<LoginData>({
+  const { register, handleSubmit , formState: { errors }, } = useForm<LoginData>({
     mode: 'onChange',
     resolver : yupResolver(loginValidaton)
   });
 
-  const loginForm = (data: LoginData) => {
-    console.log(data);
-    
-    reset();
-    navigate('/')
+
+  const loginForm = async (data: LoginData) => {
+  
+      const success= await login(data);
+      if(success === 200){
+        navigate('/')
+      }else{
+        alert('로그인을 다시 시도해주세요')
+      }
   };
 
   return (
@@ -66,18 +78,20 @@ const Login = () => {
                   {errors.user_password && <p className="text-red-500 text-sm">{errors.user_password.message}</p>}
             </div>
             <div className="flex flex-col items-center justify-between">
-              <button
+              <Button 
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-[480px] h-[50px]"
+                primary={true}
+                className=" font-bold focus:outline-none focus:shadow-outline w-[480px] h-[50px] mb-3"
               >
                 로그인
-              </button>
-              <button
-                type="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-[480px] h-[50px]"
+              </Button>
+              <Button
+                primary={true}
+                className="font-bold focus:outline-none focus:shadow-outline w-[480px] h-[50px]"
+                onClick={() => navigate('/join')}
                 >
-                <Link to={'/join'}>회원가입</Link>
-              </button>
+                회원가입
+              </Button>
             </div>
           </form>
         </div>

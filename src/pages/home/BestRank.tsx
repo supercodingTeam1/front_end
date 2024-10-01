@@ -1,15 +1,23 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useState } from "react";
-import shoe from "../../assets/shoe.png";
-import landing from "../../assets/landing.jpg";
-import infinity from "../../assets/infinity.png";
+import { useEffect, useState } from "react";
+import { getItemList } from "../../api/productApi";
+import { Link } from "react-router-dom";
 
-export interface IBestRankProps {}
+interface Item {
+  item_id: number;
+  item_image: string;
+  item_name: string;
+  category: Category;
+  price: number;
+}
+interface Category {
+  categoryGender: string;
+  categoryType: string;
+}
 
-export default function BestRank(props: IBestRankProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function BestRank() {
   const settings = {
     infinite: true,
     speed: 1000,
@@ -25,20 +33,38 @@ export default function BestRank(props: IBestRankProps) {
       setCurrentIndex(newIndex);
     },
   };
-  const items = [shoe, landing, infinity, shoe, landing, infinity];
+  const [_, setCurrentIndex] = useState(0);
+  const [items, setItems] = useState([]);
+
+  const requestBestRank = async () => {
+    const res = await getItemList({ sort: "sales", order: "desc" });
+    if (res.status === 200) {
+      setItems(res.items.content);
+    }
+  };
+  useEffect(() => {
+    requestBestRank();
+  }, []);
   return (
     <div>
       <h1 className="text-2xl pt-12 pb-4 pl-4 font-bold">Best Seller</h1>
 
       <Slider {...settings} className="">
-        {items.map((item, index) => {
+        {items.map((item: Item) => {
           return (
-            <div className="px-2 cursor-pointer">
-              <img src={item} className="w-full h-[400px] object-conver"></img>
-              <h2 className="truncate text-xl mt-2">Nike sfs </h2>
-              <p className="text-gray text-xl">Mens's shoes</p>
-              <h3 className="my-3">1250,000원</h3>
-            </div>
+            <Link to={`/detail/${item.item_id}`}>
+              <div className="px-2 cursor-pointer">
+                <img
+                  src={item.item_image}
+                  className="w-full h-[400px] object-conver"
+                ></img>
+                <h2 className="truncate text-xl mt-2">{item.item_name}</h2>
+                <p className="text-gray text-xl">
+                  {item.category.categoryGender} {item.category.categoryType}
+                </p>
+                <h3 className="my-3">{item.price.toLocaleString()}원</h3>
+              </div>
+            </Link>
           );
         })}
       </Slider>

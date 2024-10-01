@@ -9,7 +9,7 @@ const MyBosxItem = () => {
 
   return (
     <>
-      <div className="bg-gray-100 py-5 px-6 my-2 cursor-pointer">
+      <div className="border py-5 px-6 my-2 cursor-pointer">
         <div className="flex justify-around">
         <div className="text-center ">
           <strong className="block">번호</strong>

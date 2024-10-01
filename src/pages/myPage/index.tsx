@@ -1,11 +1,18 @@
-
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-
 
 import MyContent from "./mycontent";
 import MxLayout from "../../layout/MxLayout";
+import { useEffect, useState } from "react";
+import { mypageUser } from "../../api/mypageApi";
+
+export type userData = {
+  name: string;
+  roles: string[];
+  user_id: number;
+};
 
 const Mypage = () => {
+  const [mydata, setMydata] = useState<userData | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -13,6 +20,18 @@ const Mypage = () => {
     navigate("/add-product");
   };
 
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const res = await mypageUser();
+        console.log(res.MyUserInfo.data);
+        setMydata(res.MyUserInfo.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    userData();
+  }, []);
 
   return (
     <>
@@ -20,7 +39,7 @@ const Mypage = () => {
         <div className="flex gap-10 overflow-hidden">
           <div className="h-full w-[260px]  rounded-md border border-black border-solid">
             <div className="flex-1 flex-col ">
-              <h2 className=" px-4 bg-indigo-100 py-5 rounded-t-md  border-b border-black border-solid text-xl uppercase font-bold">
+              <h2 className=" px-4 bg-gray-light py-5 rounded-t-md  border-b border-black border-solid text-xl uppercase font-bold">
                 menu
               </h2>
               <nav className="py-6">
@@ -48,7 +67,11 @@ const Mypage = () => {
             </div>
           </div>
           <div className="ml-15 flex-1">
-            {location.pathname === "/mypage" ? <MyContent /> : <Outlet />}
+            {location.pathname === "/mypage" ? (
+              <MyContent mydata={mydata} />
+            ) : (
+              <Outlet />
+            )}
           </div>
         </div>
       </MxLayout>

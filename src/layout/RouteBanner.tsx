@@ -4,7 +4,7 @@ export interface IRouteBannerProps {
   // children: React.ReactNode;
 }
 
-export default function RouteBanner(props: IRouteBannerProps) {
+export default function RouteBanner() {
   const { pathname } = useLocation();
 
   const displayText = () => {
@@ -26,7 +26,7 @@ export default function RouteBanner(props: IRouteBannerProps) {
   console.log("path", pathname);
   return (
     <>
-      <div className="bg-[url('/src/assets/logan-weaver-lgnwvr-GILIG9XVfo4-unsplash.jpg')] h-40 flex items-center justify-center text-2xl text-white">
+      <div className="bg-black h-40 flex items-center justify-center text-2xl text-white">
         {displayText()}
       </div>
       <Outlet />

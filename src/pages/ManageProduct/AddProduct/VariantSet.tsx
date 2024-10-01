@@ -9,6 +9,7 @@ export interface IVariantSetProps {
 export default function VariantSet(props: IVariantSetProps) {
   const size = props.size;
   const [checked, setChecked] = React.useState(false);
+  const [value, setValue] = React.useState(0);
 
   const [productVariant, setProductVariant] =
     useRecoilState(productVariantAtom);
@@ -26,6 +27,7 @@ export default function VariantSet(props: IVariantSetProps) {
       if (isChecked) {
         // 체크된 경우, 사이즈 객체를 생성하고 초기 재고값을 0으로 설정
         if (!existingVariant) {
+          setValue(1);
           return [...old, { size, stock: 1, isChecked: true }];
         } else {
           // 이미 존재하는 사이즈가 있다면 isChecked만 true로 업데이트
@@ -43,7 +45,8 @@ export default function VariantSet(props: IVariantSetProps) {
   };
 
   const handleStockChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newStock = parseInt(e.target.value);
+    const newStock = Math.max(1, Math.min(20, Number(e.target.value)));
+    setValue(newStock);
     setProductVariant((prev) => {
       return prev.map((variant) =>
         variant.size === size ? { ...variant, stock: newStock } : variant
@@ -66,12 +69,13 @@ export default function VariantSet(props: IVariantSetProps) {
       <input
         type="number"
         onChange={handleStockChange}
-        min="1"
-        max="20"
+        min={1}
+        max={20}
         className="border rounded px-2 py-1 w-24"
         placeholder="재고"
         disabled={!checked}
         defaultValue={thisVariant?.stock}
+        value={value}
       />
     </div>
   );

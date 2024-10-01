@@ -12,7 +12,7 @@ class Http {
     return Http.instance;
   }
 
-  //프로토타입 메서드
+  //외부사용 가능 메서드
   async createRequest(config) {
     const response = await request(config);
     return response.data;
@@ -58,7 +58,9 @@ class Http {
       method: "DELETE",
       url,
       data,
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   }
 

@@ -11,7 +11,7 @@ interface ProductInfo {
   category_type: string;
   category_gender: string;
   description: string;
-  item_image: string[];
+  item_image: File[];
 }
 
 export const productInfoAtom = atom<ProductInfo>({

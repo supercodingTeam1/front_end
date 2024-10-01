@@ -1,9 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 export default function SideNavLayout() {
-  const location = useLocation();
-
   return (
     <div className="flex border-t border-gray">
       <nav className="w-64 shadow-lg">

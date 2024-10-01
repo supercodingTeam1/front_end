@@ -1,25 +1,19 @@
-import MyList from "./mylist/mylist"
-import MyTab from "./mylist/mytab"
-import MyUser from "./Myuserinfo"
+import MyList from "./mylist/mylist";
+import MyTab from "./mylist/mytab";
+import MyUser from "./Myuserinfo";
 
-
-
-
-
-const MyContent = () => {
-
-
+const MyContent = ({ mydata }) => {
   return (
     <>
       <div className="py-5">
-        <MyUser/>
+        <MyUser mydata={mydata} />
         <div className="w-full ">
-            <MyTab />
-            <MyList/>
+          <MyTab />
+          <MyList />
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default MyContent
+export default MyContent;
