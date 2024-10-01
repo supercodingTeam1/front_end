@@ -1,11 +1,14 @@
-import running from "../../assets/running.webp";
-import sandals from "../../assets/sandals.webp";
-import sneakers from "../../assets/sneakers.webp";
 import Button from "../../component/Button";
 
 export interface IAppProps {}
 
 export default function App() {
+  const sneakers =
+    "https://supercoding2406.s3.ap-northeast-2.amazonaws.com/images/828d9967-ea26-4d9d-86f7-a9b4395c6116sneakers.jpg";
+  const sandals =
+    "https://supercoding2406.s3.ap-northeast-2.amazonaws.com/images/07bf820d-e206-474e-9757-36b166fb75a2sandals.jpg";
+  const running =
+    "https://supercoding2406.s3.ap-northeast-2.amazonaws.com/images/3b8929ef-9bbd-459d-8725-ecfb7f55a0acrunning.jpg";
   const category = [running, sandals, sneakers];
   return (
     <>
