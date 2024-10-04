@@ -4,7 +4,7 @@ import { refreshToken } from "../userApi";
 
 // import { localToken } from "../../utils/auth";
 
-const base_url = "http://15.165.190.65:8080";
+const base_url = "https://super-coding-shoes-project-team1.duckdns.org/";
 
 //인스턴스 생성
 const instance = axios.create({

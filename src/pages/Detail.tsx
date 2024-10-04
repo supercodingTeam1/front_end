@@ -3,7 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getItemDetails } from "../api/productApi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../component/Button";
 import { addToCart } from "../api/cartApi";
 
@@ -33,10 +33,11 @@ interface Product {
   option: Option[];
   item_images: string[];
   item_name: string;
-  price: number | string;
+  price: number;
   description: string;
 }
 export default function Detail() {
+  const navigate = useNavigate();
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState<Product>({
@@ -44,10 +45,11 @@ export default function Detail() {
     option: [],
     item_images: [],
     item_name: "",
-    price: "",
+    price: 0,
     description: "",
   });
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
 
   useEffect(() => {
     requestDetail();
@@ -63,10 +65,10 @@ export default function Detail() {
   };
 
   const handleClickAdd = async () => {
-    if (selectedSize === null) return;
+    if (selectedOptionId === null) return;
     try {
       const res = await addToCart({
-        option_id: selectedSize,
+        option_id: selectedOptionId,
         quantity: quantity,
       });
       if (res.status === 200) {
@@ -77,9 +79,26 @@ export default function Detail() {
     } catch {}
   };
 
-  useEffect(() => {
-    console.log(selectedSize);
-  }, [selectedSize]);
+  const handleBuyNow = async () => {
+    if (selectedOptionId === null) return;
+    console.log(typeof quantity);
+
+    const params = [
+      {
+        quantity: quantity,
+        option_id: selectedOptionId,
+        item_name: product.item_name + " " + selectedSize,
+        price: quantity * product.price,
+      },
+    ];
+    navigate("/checkout", {
+      state: {
+        items: params,
+        total: quantity * product.price,
+        isFromCart: false,
+      },
+    });
+  };
 
   return (
     <div className="flex flex-col lg:flex-row gap-12 items-center justify-center p-8 bg-blue-100">
@@ -89,8 +108,10 @@ export default function Detail() {
       ))}
       {/* </Slider> */}
       <section className="flex flex-col w-full lg:w-1/3 space-y-4">
-        <h1 className="text-3xl font-bold">Asgaard 소파</h1>
-        <h2 className="text-2xl font-semibold">250,000원</h2>
+        <h1 className="text-3xl font-bold">{product.item_name}</h1>
+        <h2 className="text-2xl font-semibold">
+          {product.price.toLocaleString()}원
+        </h2>
         <p className="text-gray-600">{product.description}</p>
         <div>
           <label className="block mb-2 font-semibold">사이즈</label>
@@ -99,9 +120,12 @@ export default function Detail() {
               <button
                 key={item.optionId}
                 className={`px-4 py-2 border border-gray rounded hover:border-tahiti ${
-                  selectedSize === item.optionId ? "border-tahiti" : ""
+                  selectedOptionId === item.optionId ? "border-tahiti" : ""
                 }`}
-                onClick={() => setSelectedSize(item.optionId)}
+                onClick={() => {
+                  setSelectedOptionId(item.optionId);
+                  setSelectedSize(item.size);
+                }}
               >
                 {item.size}
               </button>
@@ -127,10 +151,14 @@ export default function Detail() {
               +
             </button>
 
-            <Button primary onClick={handleClickAdd} disabled={!selectedSize}>
+            <Button
+              primary
+              onClick={handleClickAdd}
+              disabled={!selectedOptionId}
+            >
               장바구니에 추가
             </Button>
-            <Button>지금 구매하기</Button>
+            <Button onClick={handleBuyNow}>지금 구매하기</Button>
           </div>
         </div>
       </section>

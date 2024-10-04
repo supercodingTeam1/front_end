@@ -23,7 +23,6 @@ export default function RouteBanner() {
     }
   };
 
-  console.log("path", pathname);
   return (
     <>
       <div className="bg-black h-40 flex items-center justify-center text-2xl text-white">
