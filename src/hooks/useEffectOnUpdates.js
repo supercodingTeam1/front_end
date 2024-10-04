@@ -5,7 +5,6 @@ export default function useEffectOnUpdates(callback, deps) {
 
   useEffect(() => {
     if (firstRender.current) {
-      console.log("ddd");
       firstRender.current = false;
     } else {
       callback();
