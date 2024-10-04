@@ -4,6 +4,8 @@ import MyContent from "./mycontent";
 import MxLayout from "../../layout/MxLayout";
 import { useEffect, useState } from "react";
 import { mypageUser } from "../../api/mypageApi";
+import { useRecoilValue } from "recoil";
+import { AuthAtom } from "../../recoil/user/userAtom";
 
 export type userData = {
   name: string;
@@ -12,26 +14,38 @@ export type userData = {
 };
 
 const Mypage = () => {
+  
   const [mydata, setMydata] = useState<userData | null>(null);
+  const role = useRecoilValue(AuthAtom).role
   const location = useLocation();
   const navigate = useNavigate();
 
   const moveAdd = () => {
-    navigate("/add-product");
+    navigate("/manage");
+  };
+
+  const handlecheckseller = () => {
+    if(role  === 'ROLE_SELLER'){
+      moveAdd()
+    }else{
+      alert('판매권한이 없습니다. ')
+    }
+
+  }
+  const userData = async () => {
+    try {
+      const res = await mypageUser();
+      console.log(res.MyUserInfo.data);
+      setMydata(res.MyUserInfo.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    const userData = async () => {
-      try {
-        const res = await mypageUser();
-        console.log(res.MyUserInfo.data);
-        setMydata(res.MyUserInfo.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+
     userData();
-  }, []);
+  }, [location.pathname]);
 
   return (
     <>
@@ -55,7 +69,7 @@ const Mypage = () => {
                   </li>
                   <li
                     className="py-3 px-4 h-12 leading-12 transition duration-200"
-                    onClick={moveAdd}
+                    onClick={handlecheckseller}
                   >
                     물품등록하기
                   </li>
