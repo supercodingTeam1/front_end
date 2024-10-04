@@ -8,6 +8,7 @@ import { loginValidaton } from "./validation";
 import { tokenRepo } from "../../repositories/tokenRepository";
 import {  useSetRecoilState } from "recoil";
 import { AuthAtom } from "../../recoil/user/userAtom";
+import { useEffect } from "react";
 
 
 
@@ -28,8 +29,14 @@ const Login = () => {
   });
 
 
-  const loginForm = async (data: LoginData) => {
+  useEffect(()=>{
+    setAuth({
+      role: 'guest',
+      islogin: false,
+    })
+  }, [setAuth ])
 
+  const loginForm = async (data: LoginData) => {
 
       try{
         const res = await login(data);

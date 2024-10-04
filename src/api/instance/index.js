@@ -105,6 +105,16 @@ class Http {
       },
     });
   }
+
+  refreshtoken(url, refreshToken){
+    return this.createRequest({
+      method: 'POST',
+      url,
+      headers: {
+        'refreshToken' : refreshToken
+      }
+    })
+  }
 }
 
 export default Http.getInstance(); //스태틱 메서드 호출

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { tokenRepo } from "../../repositories/tokenRepository";
+import { refreshToken } from "../userApi";
+
 // import { localToken } from "../../utils/auth";
 
 const base_url = "http://15.165.190.65:8080";
@@ -54,15 +56,32 @@ instance.interceptors.response.use(
 
     return response;
   },
-  function (error) {
+  async function (error) {
     // 2xx 외의 범위에 있는 상태 코드는 이 함수를 트리거 한다.
     // 응답 오류가 있는 작업 수행
     const { response } = error;
     if (response) {
-      if (response.status === 401) {
-        // 로그인 필요
-        // localToken.remove();
-        //TODO: history에 푸쉬, 로그인 뒤에 원래 있던 페이지로 이동
+      if (response.status === 401 || response.status === 400 ) {
+        const originrefreshToken = tokenRepo.getRefreshToken();
+        console.log(originrefreshToken)
+        const originalRequest = error.config;
+
+        try{
+          const newAccessToken = await refreshToken(originrefreshToken)
+          console.log('리프레쉬토큰 가져오기 ',newAccessToken)
+          tokenRepo.setToken(newAccessToken.user_token)
+          tokenRepo.setRefreshToken(newAccessToken.user_refreshtoken)
+
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken.user_token}`;
+      
+          return instance.request(originalRequest);
+        }
+        catch(refreshError){
+          console.error("Refresh token failed", refreshError);
+          console.log('안되고 있음')
+          window.location.replace('/login');
+          return Promise.reject(refreshError);
+        }
       } else if (response.status === 503) {
         // 서버 오류
       } else {

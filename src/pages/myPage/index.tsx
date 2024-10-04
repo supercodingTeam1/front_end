@@ -7,6 +7,7 @@ import { mypageUser } from "../../api/mypageApi";
 import { useRecoilValue } from "recoil";
 import { AuthAtom } from "../../recoil/user/userAtom";
 
+
 export type userData = {
   name: string;
   roles: string[];
@@ -33,6 +34,8 @@ const Mypage = () => {
 
   }
   const userData = async () => {
+
+
     try {
       const res = await mypageUser();
       console.log(res.MyUserInfo.data);
@@ -43,7 +46,7 @@ const Mypage = () => {
   };
 
   useEffect(() => {
-
+  
     userData();
   }, [location.pathname]);
 

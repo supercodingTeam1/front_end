@@ -8,6 +8,9 @@ const MyUser = ({ mydata }) => {
 
 
 
+
+
+
   if(!mydata || !mydata.user_info){
     return <div>아직 데이터가 없습니다. </div>
   }
