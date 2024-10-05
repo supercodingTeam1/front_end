@@ -14,9 +14,33 @@ export type userData = {
   user_id: number;
 };
 
+export type UserOrder = {
+  order_num: string;
+  order_at: string; // ISO 8601 형식의 날짜 문자열
+  address: string;
+  phone_num: string;
+  myBuyItemDetailDTOList: MyBuyItemDetailDTO[];
+};
+
+export type MyBuyItemDetailDTO = {
+  order_id: number;
+  item_image: string;
+  item_name: string;
+  price: string; // 가격을 문자열로 유지
+  myBuyItemOptionDetailDTOList: MyBuyItemOptionDetailDTO[];
+};
+
+export type MyBuyItemOptionDetailDTO = {
+  option_id: number;
+  size: number;
+  quantity: number;
+};
+
+
 const Mypage = () => {
   
   const [mydata, setMydata] = useState<userData | null>(null);
+  const [orderlist, setOrderList]  = useState<UserOrder[]>([])
   const role = useRecoilValue(AuthAtom).role
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,19 +58,16 @@ const Mypage = () => {
 
   }
   const userData = async () => {
-
-
     try {
       const res = await mypageUser();
-      console.log(res.MyUserInfo.data);
       setMydata(res.MyUserInfo.data);
+      setOrderList(res.MyUserInfo.data.user_order)
     } catch (error) {
       console.log(error);
     }
   };
-
+ 
   useEffect(() => {
-  
     userData();
   }, [location.pathname]);
 
@@ -85,7 +106,7 @@ const Mypage = () => {
           </div>
           <div className="ml-15 flex-1">
             {location.pathname === "/mypage" ? (
-              <MyContent mydata={mydata} />
+              <MyContent mydata={mydata} orderlist={orderlist} />
             ) : (
               <Outlet />
             )}

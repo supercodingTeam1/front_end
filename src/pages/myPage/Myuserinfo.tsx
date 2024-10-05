@@ -26,7 +26,7 @@ const MyUser = ({ mydata }) => {
 
   return (
     <>
-      {JSON.stringify(mydata)}
+      {/* {JSON.stringify(mydata)} */}
       <div className="">
         <h3 className="text-2xl">
           반가워요! <span className="font-bold">{name}</span>

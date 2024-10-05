@@ -35,7 +35,7 @@ export const deleteUser = async () => {
 
 
 //토큰 재요청 
-export const refreshToken = async (originrefreshToken) => {
+export const refreshTokenAPi = async (originrefreshToken) => {
   const res = await http.refreshToken('/auth/refreshToken',originrefreshToken)
   console.log(res)
   return res.data

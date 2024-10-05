@@ -1,6 +1,6 @@
 import axios from "axios";
 import { tokenRepo } from "../../repositories/tokenRepository";
-import { refreshToken } from "../userApi";
+import { refreshTokenAPi } from "../userApi";
 
 // import { localToken } from "../../utils/auth";
 
@@ -65,9 +65,11 @@ instance.interceptors.response.use(
         const originrefreshToken = tokenRepo.getRefreshToken();
         console.log(originrefreshToken)
         const originalRequest = error.config;
+        console.log('오리진 리퀘스트 ', originalRequest)
 
         try{
-          const newAccessToken = await refreshToken(originrefreshToken)
+          console.log('트라이 부분 시작')
+          const newAccessToken = await refreshTokenAPi(originrefreshToken)
           console.log('리프레쉬토큰 가져오기 ',newAccessToken)
           tokenRepo.setToken(newAccessToken.user_token)
           tokenRepo.setRefreshToken(newAccessToken.user_refreshtoken)
