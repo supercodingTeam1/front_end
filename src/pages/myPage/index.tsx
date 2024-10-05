@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { mypageUser } from "../../api/mypageApi";
 import { useRecoilValue } from "recoil";
 import { AuthAtom } from "../../recoil/user/userAtom";
+import DeleteUser from "../auth/deletuser";
 
 
 export type userData = {
@@ -37,13 +38,21 @@ export type MyBuyItemOptionDetailDTO = {
 };
 
 
+
+
 const Mypage = () => {
   
   const [mydata, setMydata] = useState<userData | null>(null);
   const [orderlist, setOrderList]  = useState<UserOrder[]>([])
+  const [isDelete , setIsDelete] = useState(false);
   const role = useRecoilValue(AuthAtom).role
   const location = useLocation();
   const navigate = useNavigate();
+
+  const handleOpenDeleteModal = () => {
+    setIsDelete(true)
+  }
+
 
   const moveAdd = () => {
     navigate("/manage");
@@ -97,7 +106,10 @@ const Mypage = () => {
                   >
                     물품등록하기
                   </li>
-                  <li className="py-3 px-4 h-12 leading-12 transition duration-200 ">
+                  <li 
+                    className="py-3 px-4 h-12 leading-12 transition duration-200"
+                    onClick={handleOpenDeleteModal}
+                    >
                     회원탈퇴
                   </li>
                 </ul>
@@ -113,6 +125,7 @@ const Mypage = () => {
           </div>
         </div>
       </MxLayout>
+      {isDelete ? <DeleteUser setIsDelete={setIsDelete}/> :null}
     </>
   );
 };

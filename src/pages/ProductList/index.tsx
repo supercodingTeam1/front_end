@@ -10,14 +10,24 @@ export interface IProductListProps {}
 export default function ProductList() {
   const [page, _] = React.useState(1);
   const [products, setProducts] = React.useState([]);
+  const [sizeFilter, setSizeFilter] = React.useState();
+  const [orderFilter, setOrderFilter] = React.useState("asc");
   const shoeSizes = [210, 220, 230, 240, 250, 260, 270, 280, 290];
 
   React.useEffect(() => {
     getItems();
-  }, []);
+  }, [ sizeFilter, orderFilter]);
+
   const getItems = async () => {
     try {
-      const res = await getItemList({ page: page, size: 100 });
+      const res = await getItemList(
+        {
+          page: page, 
+          size: 100, 
+          optionSize : sizeFilter !== 'all' ? sizeFilter : undefined,
+          order : orderFilter
+        });
+      console.log(res)
       setProducts(res.items.content);
     } catch {
       console.log("errr");
@@ -27,7 +37,11 @@ export default function ProductList() {
   return (
     <div>
       {/* filter */}
-      <CardFilter shoeSizes={shoeSizes} />
+      <CardFilter 
+        shoeSizes={shoeSizes}
+        setSizeFilter={setSizeFilter}
+        setOrderFilter={setOrderFilter}
+      />
       <MxLayout>
         {/* list */}
         <div className="flex  flex-wrap gap-x-3 gap-y-6">

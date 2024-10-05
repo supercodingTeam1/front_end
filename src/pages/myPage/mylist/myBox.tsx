@@ -18,7 +18,7 @@ const MyBosxItem = ({ orderlist }) => {
               price,
               myBuyItemOptionDetailDTOList,
             }) => (
-              <div>
+              <div className="flex">
                 <div className="w-[60px] h-[60px] ">
                   <img
                     src={orderlist ? item_image : defaultImg}
