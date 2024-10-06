@@ -36,7 +36,7 @@ export default function ItemCard({ product }: { product: IItemCardProps }) {
             {product.category.categoryType}
           </span>
           <span className="text-xs md:text-base xl:text-xl">
-            ₩ {product.price}
+            ₩ {product.price.toLocaleString()}
           </span>
         </div>
       </div>

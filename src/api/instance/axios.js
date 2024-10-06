@@ -29,13 +29,13 @@ instance.interceptors.request.use(
     // const token =
     //   "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjgsInN1YiI6IjgiLCJpc3MiOiJzdXBlcmNvZGluZyBhcHAiLCJpYXQiOjE3Mjc0OTMyMzIsImV4cCI6MTcyNzQ5NjgzMn0.mEV25E2j1W9Y2K6ifPr6QjjRuY0GqeK_C7bVSlKYeB3KbNwYBMq-aY5pWggdkSqyGqC11VopHjxP2nxoeCPtsw";
 
-    let auth = "";
+    // let auth = "";
+
+    // if (token) {
+    //   auth = "Bearer " + token;
+    // }
 
     if (token) {
-      auth = "Bearer " + token;
-    }
-
-    if (auth) {
       config.headers["X-AUTH-TOKEN"] = token;
     }
 
@@ -61,27 +61,26 @@ instance.interceptors.response.use(
     // 응답 오류가 있는 작업 수행
     const { response } = error;
     if (response) {
-      if (response.status === 401 || response.status === 400 ) {
+      if (response.status === 401 || response.status === 400) {
         const originrefreshToken = tokenRepo.getRefreshToken();
-        console.log(originrefreshToken)
+        console.log(originrefreshToken);
         const originalRequest = error.config;
-        console.log('오리진 리퀘스트 ', originalRequest)
+        console.log("오리진 리퀘스트 ", originalRequest);
 
-        try{
-          console.log('트라이 부분 시작')
-          const newAccessToken = await refreshTokenAPi(originrefreshToken)
-          console.log('리프레쉬토큰 가져오기 ',newAccessToken)
-          tokenRepo.setToken(newAccessToken.user_token)
-          tokenRepo.setRefreshToken(newAccessToken.user_refreshtoken)
+        try {
+          console.log("트라이 부분 시작");
+          const newAccessToken = await refreshTokenAPi(originrefreshToken);
+          console.log("리프레쉬토큰 가져오기 ", newAccessToken);
+          tokenRepo.setToken(newAccessToken.user_token);
+          tokenRepo.setRefreshToken(newAccessToken.user_refreshtoken);
 
           originalRequest.headers.Authorization = `Bearer ${newAccessToken.user_token}`;
-      
+
           return instance.request(originalRequest);
-        }
-        catch(refreshError){
+        } catch (refreshError) {
           console.error("Refresh token failed", refreshError);
-          console.log('안되고 있음')
-          window.location.replace('/login');
+          console.log("안되고 있음");
+          window.location.replace("/login");
           return Promise.reject(refreshError);
         }
       } else if (response.status === 503) {
