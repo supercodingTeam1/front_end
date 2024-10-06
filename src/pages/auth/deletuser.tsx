@@ -1,8 +1,15 @@
 
+import { useSetRecoilState } from "recoil";
 import { deleteUser } from "../../api/userApi";
 import Button from "../../component/Button";
+import { tokenRepo } from "../../repositories/tokenRepository";
+import { AuthAtom } from "../../recoil/user/userAtom";
+import { useNavigate } from "react-router-dom";
 
 const DeleteUser = ({ setIsDelete }) => {
+
+  const setAuth = useSetRecoilState(AuthAtom)
+  const navigate = useNavigate()
  
   const handleClose = () => {
     setIsDelete(false)
@@ -12,6 +19,15 @@ const DeleteUser = ({ setIsDelete }) => {
     try{
       const res = await deleteUser();
       console.log(res)
+      if(res.status === 200){
+        tokenRepo.removeToken()
+        tokenRepo.removeRefreshToken()
+        setAuth({
+          role: 'guest',
+          islogin: false,
+        });
+        navigate('/')
+      }
     }
     catch(error){
       console.log(error)

@@ -14,19 +14,23 @@ const Logout = () => {
 
 
   const handleLogout = async () => {
-    tokenRepo.removeToken()
-    tokenRepo.removeRefreshToken()
-    setAuth({
-      role: 'guest',
-      islogin: false,
-    });
-    navigate('/')
-    // 로그아웃 요청 
-    const res = await logout()
-    console.log(res)
-    //로그아웃시 로컬 호스트등 토큰 전부 삭제 
-    // 페이지 이동 
-    // 리코이 상태 초기화 
+
+    try{
+      const res = await logout()
+      console.log(res)
+      if(res.status === 200){
+        tokenRepo.removeToken()
+        tokenRepo.removeRefreshToken()
+        setAuth({
+          role: 'guest',
+          islogin: false,
+        });
+        navigate('/')
+      }
+    }
+    catch(error){
+      console.log(error)
+    }
   };
 
 
