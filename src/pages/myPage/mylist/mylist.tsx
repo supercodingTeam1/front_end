@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import MyBosxItem from "./myBox";
 
-const MyList = ({ orderlist }) => {
+const MyList = ({ orderlist  }) => {
   const location = useLocation();
 
   console.log("마이리스트", orderlist);

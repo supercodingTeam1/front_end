@@ -4,7 +4,7 @@ import MxLayout from "../layout/MxLayout"
 
 
 
-const CardFilter = ({shoeSizes, setOrderFilter, setSizeFilter}) => {
+const CardFilter = ({shoeSizes, setOrderFilter, setSizeFilter, orderFilter}) => {
   return(
     <>
       <MxLayout>
@@ -29,14 +29,14 @@ const CardFilter = ({shoeSizes, setOrderFilter, setSizeFilter}) => {
             <ul className="flex cursor-pointer">
               <Button 
                 type="button"  
-                primary={true}
+                primary={orderFilter === 'asc'}
                 onClick={() => setOrderFilter('asc')}
                 >
               낮은순 
               </Button>
               <Button 
                 type="button"
-                primary={false} 
+                primary={orderFilter === 'desc'} 
                 onClick={() => setOrderFilter('desc')}
                 className=" ml-4">높은순
               </Button>

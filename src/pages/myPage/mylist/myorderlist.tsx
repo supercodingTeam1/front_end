@@ -4,6 +4,7 @@ import MyBosxItem from "./myBox";
 import MyList from "./mylist";
 import { Link } from "react-router-dom";
 import { myOrderApi } from "../../../api/mypageApi";
+import MypageNation from "../pagenation";
 
 
 export type UserOrder = {
@@ -31,6 +32,9 @@ export type MyBuyItemOptionDetailDTO = {
 
 const MyOrderList = () => {
   const [orderlist, setOrderList] = useState<UserOrder[]>([])
+  const [currentPage , setCurrentPage] = useState(1)
+  const itemperPage = 5; 
+
   useEffect(() => {
     const orderlist = async () => {
       const res = await myOrderApi()
@@ -41,6 +45,10 @@ const MyOrderList = () => {
     orderlist()
   },[]);  
 
+  const totalPage = Math.ceil(orderlist.length / itemperPage)
+  const startIndex = (currentPage - 1) * itemperPage;
+  const currentOrders = orderlist.slice(startIndex, startIndex + itemperPage);
+  console.log('페이지네이션 ',currentOrders)
   return (
     <>
       <div className="">
@@ -55,12 +63,17 @@ const MyOrderList = () => {
             </Button>
           </Link>
         </div>
-        <MyList orderlist={orderlist}/>
-        {orderlist.map((item, index) => 
+        <MyList orderlist={currentOrders}/>
+        {currentOrders.map((item, index) => 
           <MyBosxItem orderlist={item} key={index} />
         )}
-        {/* <MyBosxItem orderlist={orderlist}/> */}
+        <MypageNation
+          currentPage = {currentPage}
+          setCurrentPage = {setCurrentPage}
+          totalPage = {totalPage}
+        />
       </div>
+
     </>
   );
 };

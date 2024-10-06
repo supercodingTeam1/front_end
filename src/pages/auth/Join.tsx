@@ -25,6 +25,7 @@ const Join = () => {
   const [isModal, setIsModal] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
   const [isCheckEmail, setIsCheckEmail] = useState(false);
+  const [profileImage, setProfileImage] = useState<File | null>(null); 
   const [profileImageUrl, setProfileImageUrl] = useState(defaultImg);
 
   const {
@@ -90,8 +91,9 @@ const Join = () => {
 
     // FormData 생성
     const formData = new FormData();
-
-    formData.append("profileImage", profileImageUrl);
+    if (profileImage) {
+      formData.append("profileImage", profileImage);
+    }
     formData.append(
       "request",
       JSON.stringify({
@@ -115,8 +117,10 @@ const Join = () => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null; // 파일 선택
     if (file) {
+      setProfileImage(file); // 파일을 저장
       setProfileImageUrl(URL.createObjectURL(file)); // 이미지 미리보기
     }
+    console.log(file)
   };
   return (
     <>

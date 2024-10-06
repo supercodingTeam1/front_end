@@ -44,6 +44,7 @@ export default function ProductList() {
         shoeSizes={shoeSizes}
         setSizeFilter={setSizeFilter}
         setOrderFilter={setOrderFilter}
+        orderFilter={orderFilter}
       />
       <MxLayout>
         {/* list */}
