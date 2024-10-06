@@ -25,15 +25,6 @@ instance.interceptors.request.use(
 
     // 헤더에 토큰 추가
     const token = tokenRepo.getToken();
-    // const token = localToken.get();
-    // const token =
-    //   "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjgsInN1YiI6IjgiLCJpc3MiOiJzdXBlcmNvZGluZyBhcHAiLCJpYXQiOjE3Mjc0OTMyMzIsImV4cCI6MTcyNzQ5NjgzMn0.mEV25E2j1W9Y2K6ifPr6QjjRuY0GqeK_C7bVSlKYeB3KbNwYBMq-aY5pWggdkSqyGqC11VopHjxP2nxoeCPtsw";
-
-    // let auth = "";
-
-    // if (token) {
-    //   auth = "Bearer " + token;
-    // }
 
     if (token) {
       config.headers["X-AUTH-TOKEN"] = token;
@@ -67,15 +58,16 @@ instance.interceptors.response.use(
 
         try {
           const newAccessToken = await refreshTokenAPi(originrefreshToken);
+          console.log("config", newAccessToken);
           tokenRepo.setToken(newAccessToken.user_token);
           tokenRepo.setRefreshToken(newAccessToken.user_refreshtoken);
 
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken.user_token}`;
+          originalRequest.headers["X-AUTH-TOKEN"] = newAccessToken.user_token;
 
           return instance.request(originalRequest);
         } catch (refreshError) {
           console.error("Refresh token failed", refreshError);
-          window.location.replace("/login");
+          // window.location.replace("/login");
           return Promise.reject(refreshError);
         }
       } else if (response.status === 503) {
