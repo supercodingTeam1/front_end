@@ -8,6 +8,9 @@ const MyUser = ({ mydata }) => {
 
 
 
+
+
+
   if(!mydata || !mydata.user_info){
     return <div>아직 데이터가 없습니다. </div>
   }
@@ -23,7 +26,7 @@ const MyUser = ({ mydata }) => {
 
   return (
     <>
-      {JSON.stringify(mydata)}
+      {/* {JSON.stringify(mydata)} */}
       <div className="">
         <h3 className="text-2xl">
           반가워요! <span className="font-bold">{name}</span>

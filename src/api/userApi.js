@@ -25,7 +25,18 @@ export const login = async (data) => {
 
 // 로그아웃 
 export const logout = async () => {
-  return http.post('/auth/logout',{})
+  return http.post('/auth/logout')
 }
 
 //회원탈퇴 
+export const deleteUser = async () => {
+  return http.delete('/auth/withdraw')
+}
+
+
+//토큰 재요청 
+export const refreshTokenAPi = async (originrefreshToken) => {
+  const res = await http.refreshToken('/auth/refreshToken',originrefreshToken)
+  console.log(res)
+  return res.data
+}
