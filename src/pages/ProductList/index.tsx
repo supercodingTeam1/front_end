@@ -6,6 +6,7 @@ import CardFilter from "../CardFilter";
 import { getItemList } from "../../api/productApi";
 import PreparingItem from "../PreparingItem";
 import Button from "../../component/Button";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 export interface IProductListProps {}
 interface FilterContextType {
@@ -26,6 +27,11 @@ const FilterContext = React.createContext<FilterContextType>({
 // 카테고리변경없음
 // 페이지 변경 concat
 export default function ProductList() {
+  const { state } = useLocation();
+  const [searchParams] = useSearchParams();
+  const categoryGender = searchParams.get("categoryGender");
+  const { categoryType } = state || {};
+  console.log("state", state);
   const [page, setPage] = React.useState(1);
   const [products, setProducts] = React.useState([]);
   const [sizeFilter, setSizeFilter] = React.useState();
@@ -42,13 +48,15 @@ export default function ProductList() {
     size: 8,
     optionSize: sizeFilter !== "all" ? sizeFilter : undefined,
     order: orderFilter,
-    sort: sort,
+    sort,
+    categoryType,
+    categoryGender,
   };
 
   React.useEffect(() => {
     setPage(1);
     getItems();
-  }, [sizeFilter, orderFilter]);
+  }, [sizeFilter, orderFilter, categoryGender]);
 
   const getItems = async () => {
     try {

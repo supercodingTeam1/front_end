@@ -32,8 +32,7 @@ export default function ItemCard({ product }: { product: IItemCardProps }) {
             {product.item_name}
           </h1>
           <span className="text-xs md:text-sm xl:text-base text-gray-400">
-            {product.category.categoryGender}
-            {product.category.categoryType}
+            {product.category.categoryGender} • {product.category.categoryType}
           </span>
           <span className="text-xs md:text-base xl:text-xl">
             ₩ {product.price.toLocaleString()}

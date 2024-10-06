@@ -17,6 +17,8 @@ export default function RouteBanner() {
         return "Checkout";
       case "/detail":
         return "Detail";
+      case "/product-list":
+        return "전체 아이템";
 
       default:
         return pathname;
