@@ -67,7 +67,7 @@ instance.interceptors.response.use(
           return instance.request(originalRequest);
         } catch (refreshError) {
           console.error("Refresh token failed", refreshError);
-          // window.location.replace("/login");
+          window.location.replace("/login");
           return Promise.reject(refreshError);
         }
       } else if (response.status === 503) {

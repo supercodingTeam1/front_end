@@ -1,4 +1,5 @@
 import MxLayout from "../layout/MxLayout";
+import logo from "../assets/logo.png";
 
 export default function Footer() {
   return (
@@ -6,7 +7,7 @@ export default function Footer() {
       <MxLayout>
         <div className="flex justify-between">
           <div className="">
-            <h2 className="mb-12">로고</h2>
+            <img src={logo} className="w-10 h-10 mb-4"></img>
             <p className="text-base text-gray-300">
               400 University Drive Suite 200 Coral Gables, FL 33134 USA
             </p>
