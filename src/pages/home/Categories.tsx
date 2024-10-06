@@ -9,7 +9,11 @@ export default function App() {
     "https://supercoding2406.s3.ap-northeast-2.amazonaws.com/images/07bf820d-e206-474e-9757-36b166fb75a2sandals.jpg";
   const running =
     "https://supercoding2406.s3.ap-northeast-2.amazonaws.com/images/3b8929ef-9bbd-459d-8725-ecfb7f55a0acrunning.jpg";
-  const category = [running, sandals, sneakers];
+  const category = [
+    { keyword: "running", img: running },
+    { keyword: "sneakers", img: sneakers },
+    { keyword: "sandals", img: sandals },
+  ];
   return (
     <>
       <h1 className="text-2xl pt-12 pb-4 pl-4 font-bold">Shop By Category</h1>
@@ -17,10 +21,10 @@ export default function App() {
         {category.map((v) => {
           return (
             <div className="flex flex-col gap-2 cursor-pointer relative">
-              <img src={v} className="w-[360px]" />
+              <img src={v.img} className="w-[360px]" />
               <span className="absolute bottom-2 left-2">
                 {" "}
-                <Button className="border-none">Running</Button>
+                <Button className="border-none">{v.keyword}</Button>
               </span>
             </div>
           );

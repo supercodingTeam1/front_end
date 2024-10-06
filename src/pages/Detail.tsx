@@ -103,8 +103,8 @@ export default function Detail() {
   return (
     <div className="flex flex-col lg:flex-row gap-12 items-center justify-center p-8 bg-blue-100">
       {/* <Slider {...settings} className="w-96 h-96"> */}
-      {product.item_images?.map((image) => (
-        <img src={image} className="object-contain w-96 h-96" />
+      {product.item_images?.map((image, index) => (
+        <img src={image} className="object-contain w-96 h-96" key={index} />
       ))}
       {/* </Slider> */}
       <section className="flex flex-col w-full lg:w-1/3 space-y-4">
