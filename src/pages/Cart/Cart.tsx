@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import MxLayout from "../../layout/MxLayout";
 import Button from "../../component/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { deleteCartItem, getItemsInCart } from "../../api/cartApi";
 import CartItem from "./CartItem";
 

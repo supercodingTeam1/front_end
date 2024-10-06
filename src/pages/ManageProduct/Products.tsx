@@ -39,25 +39,8 @@ export default function Products() {
     }
   };
 
-  const handleStockChange = async (
-    productId: number,
-    optionId: string,
-    newStock: number
-  ) => {
-    // setProducts((prevProducts) =>
-    //   prevProducts.map((product) =>
-    //     product.item_id === productId
-    //       ? {
-    //           ...product,
-    //           option: product.options.map((opt) =>
-    //             opt.optionId === optionId ? { ...opt, stock: newStock } : opt
-    //           ),
-    //         }
-    //       : product
-    //   )
-    // );
-    const res = await changeItemStock([{ optionId, newStock }]);
-    console.log(optionId, newStock);
+  const handleStockChange = async (optionId: string, newStock: number) => {
+    await changeItemStock([{ optionId, newStock }]);
   };
 
   return (
@@ -122,7 +105,6 @@ export default function Products() {
                             defaultValue={opt.stock}
                             onChange={(e) =>
                               handleStockChange(
-                                product.item_id,
                                 opt.optionId,
                                 parseInt(e.target.value)
                               )
