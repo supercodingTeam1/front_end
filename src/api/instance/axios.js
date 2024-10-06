@@ -61,7 +61,7 @@ instance.interceptors.response.use(
     // 응답 오류가 있는 작업 수행
     const { response } = error;
     if (response) {
-      if (response.status === 401 || response.status === 400) {
+      if (response.status === 401) {
         const originrefreshToken = tokenRepo.getRefreshToken();
         console.log(originrefreshToken);
         const originalRequest = error.config;

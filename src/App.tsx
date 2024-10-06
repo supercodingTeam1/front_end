@@ -1,8 +1,10 @@
 import { Outlet } from "react-router-dom";
 import Header from "./component/HeadNavBar";
 import Footer from "./component/Footer";
+import { useScrollTop } from "./hooks/useScrollTop";
 
 function App() {
+  useScrollTop();
   return (
     <>
       <Header />
