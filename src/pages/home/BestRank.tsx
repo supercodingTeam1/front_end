@@ -50,10 +50,10 @@ export default function BestRank() {
       <h1 className="text-2xl pt-12 pb-4 pl-4 font-bold">Best Seller</h1>
 
       <Slider {...settings} className="">
-        {items.map((item: Item) => {
+        {items.map((item: Item, index) => {
           return (
-            <Link to={`/detail/${item.item_id}`}>
-              <div className="px-2 cursor-pointer">
+            <Link to={`/detail/${item.item_id}`} key={item.item_id}>
+              <div className="px-2 cursor-pointer relative">
                 <img
                   src={item.item_image}
                   className="w-full h-[400px] object-conver"
@@ -63,6 +63,9 @@ export default function BestRank() {
                   {item.category.categoryGender} {item.category.categoryType}
                 </p>
                 <h3 className="my-3">{item.price.toLocaleString()}원</h3>
+                <div className="absolute right-0 top-0 bg-black text-white w-8 h-8 flex items-center justify-center rounded-sm">
+                  {index + 1}
+                </div>
               </div>
             </Link>
           );

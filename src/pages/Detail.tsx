@@ -6,18 +6,19 @@ import { getItemDetails } from "../api/productApi";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../component/Button";
 import { addToCart } from "../api/cartApi";
+import Slider from "react-slick";
 
-// const settings = {
-//   dots: true,
-//   infinite: true,
-//   speed: 500,
-//   slidesToShow: 1,
-//   slidesToScroll: 1,
-//   autoplay: false,
-//   autoplaySpeed: 2000,
-//   centerMode: true,
-//   centerPadding: "0",
-// };
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 3000,
+  centerMode: true,
+  centerPadding: "0",
+};
 
 interface Option {
   optionId: string;
@@ -102,11 +103,11 @@ export default function Detail() {
 
   return (
     <div className="flex flex-col lg:flex-row gap-12 items-center justify-center p-8 bg-blue-100">
-      {/* <Slider {...settings} className="w-96 h-96"> */}
-      {product.item_images?.map((image, index) => (
-        <img src={image} className="object-contain w-96 h-96" key={index} />
-      ))}
-      {/* </Slider> */}
+      <Slider {...settings} className="w-96 h-96 overflow-hidden">
+        {product.item_images?.map((image, index) => (
+          <img src={image} className="object-contain w-96 h-96" key={index} />
+        ))}
+      </Slider>
       <section className="flex flex-col w-full lg:w-1/3 space-y-4">
         <h1 className="text-3xl font-bold">{product.item_name}</h1>
         <h2 className="text-2xl font-semibold">
