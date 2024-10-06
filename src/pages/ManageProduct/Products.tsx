@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getSellItems } from "../../api/manageProductApi";
+import { changeItemStock, getSellItems } from "../../api/manageProductApi";
 
 interface Option {
-  option_id: string;
-  option_name: string;
+  optionId: string;
+  size: string;
   stock: number;
 }
 interface Category {
@@ -39,23 +39,8 @@ export default function Products() {
     }
   };
 
-  const handleStockChange = (
-    productId: number,
-    optionId: string,
-    newStock: number
-  ) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.item_id === productId
-          ? {
-              ...product,
-              option: product.options.map((opt) =>
-                opt.option_id === optionId ? { ...opt, stock: newStock } : opt
-              ),
-            }
-          : product
-      )
-    );
+  const handleStockChange = async (optionId: string, newStock: number) => {
+    await changeItemStock([{ optionId, newStock }]);
   };
 
   return (
@@ -111,17 +96,16 @@ export default function Products() {
                     <div className="mt-2">
                       {product.options.map((opt) => (
                         <div
-                          key={opt.option_id}
+                          key={opt.optionId}
                           className="flex items-center mb-2"
                         >
-                          <span className="w-1/3">{opt.option_name}</span>
+                          <span className="w-1/3">사이즈: {opt.size}</span>
                           <input
                             type="number"
-                            value={opt.stock}
+                            defaultValue={opt.stock}
                             onChange={(e) =>
                               handleStockChange(
-                                product.item_id,
-                                opt.option_id,
+                                opt.optionId,
                                 parseInt(e.target.value)
                               )
                             }

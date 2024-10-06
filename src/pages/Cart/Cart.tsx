@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import MxLayout from "../../layout/MxLayout";
 import Button from "../../component/Button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { deleteCartItem, getItemsInCart } from "../../api/cartApi";
 import CartItem from "./CartItem";
 
@@ -17,6 +17,7 @@ interface Item {
 }
 
 export default function Cart() {
+  const navigate = useNavigate();
   const [cartItem, setCartItem] = useState<Item[]>([]);
   const [total, setTotal] = useState(0);
 
@@ -52,6 +53,21 @@ export default function Cart() {
     }
   }, [cartItem]);
 
+  const onClickCheckout = () => {
+    const params = cartItem.map((eachItem) => {
+      return {
+        quantity: eachItem.quantity,
+        option_id: eachItem.option_id,
+        item_name: eachItem.item_name + " " + eachItem.size,
+        price: eachItem.quantity * eachItem.price,
+      };
+    });
+
+    navigate("/checkout", {
+      state: { items: params, total: total, isFromCart: true },
+    });
+  };
+
   return (
     <MxLayout>
       <div className="min-h-screen w-full flex flex-col lg:flex-row">
@@ -85,9 +101,9 @@ export default function Cart() {
                 <span>총계:</span>
                 <span className="font-bold">₩ {total.toLocaleString()} </span>
               </div>
-              <Link to="/checkout">
-                <Button primary>결제하기</Button>
-              </Link>
+              <Button primary onClick={onClickCheckout}>
+                주문하기
+              </Button>
             </div>
           </>
         )}

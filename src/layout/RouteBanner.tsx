@@ -17,13 +17,14 @@ export default function RouteBanner() {
         return "Checkout";
       case "/detail":
         return "Detail";
+      case "/product-list":
+        return "전체 아이템";
 
       default:
         return pathname;
     }
   };
 
-  console.log("path", pathname);
   return (
     <>
       <div className="bg-black h-40 flex items-center justify-center text-2xl text-white">

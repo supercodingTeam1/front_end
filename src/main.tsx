@@ -6,6 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./router/rotuer";
 import { RecoilRoot } from "recoil";
 
+
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
   <RecoilRoot>

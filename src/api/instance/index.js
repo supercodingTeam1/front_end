@@ -105,6 +105,17 @@ class Http {
       },
     });
   }
+
+  refreshToken(url, originrefreshToken){
+    return this.createRequest({
+      method: 'POST',
+      url,
+      headers: {
+        'refreshToken': originrefreshToken, // 헤더에 리프레시 토큰 추가
+        'Content-Type': 'application/json' // JSON 형식으로 요청
+      }
+    })
+  }
 }
 
 export default Http.getInstance(); //스태틱 메서드 호출

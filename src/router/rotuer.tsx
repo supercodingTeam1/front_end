@@ -5,7 +5,7 @@ import Detail from "../pages/Detail";
 import ErrorPage from "../pages/ErrorPage";
 import Login from "../pages/auth/Loigin";
 import Join from "../pages/auth/Join";
-import Checkout from "../pages/Checkout";
+import Checkout from "../pages/Checkout/Checkout";
 import Mypage from "../pages/myPage";
 // import MySellerList from "../pages/myPage/mylist/mysellerlist";
 import MyOrderList from "../pages/myPage/mylist/myorderlist";

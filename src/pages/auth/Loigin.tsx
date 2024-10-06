@@ -5,7 +5,11 @@ import {  useNavigate } from "react-router-dom";
 import Button from "../../component/Button";
 import { login } from "../../api/userApi";
 import { loginValidaton } from "./validation";
-// import { tokenRepo } from "../../repositories/tokenRepository";
+import { tokenRepo } from "../../repositories/tokenRepository";
+import {  useSetRecoilState } from "recoil";
+import { AuthAtom } from "../../recoil/user/userAtom";
+import { useEffect } from "react";
+
 
 
 
@@ -16,7 +20,7 @@ type LoginData = {
 
 
 const Login = () => {
-
+  const setAuth = useSetRecoilState(AuthAtom)
   const navigate = useNavigate()
 
   const { register, handleSubmit , formState: { errors }, } = useForm<LoginData>({
@@ -25,16 +29,34 @@ const Login = () => {
   });
 
 
+  useEffect(()=>{
+    setAuth({
+      role: 'guest',
+      islogin: false,
+    })
+  }, [setAuth ])
+
   const loginForm = async (data: LoginData) => {
-  
-      const success= await login(data);
-      if(success === 200){
-        navigate('/')
-      }else{
+
+      try{
+        const res = await login(data);
+
+        if(res.status == 200 ){
+          const {user_token, user_refreshtoken, role} = res.data
+          tokenRepo.setToken(user_token)
+          tokenRepo.setRefreshToken(user_refreshtoken)
+          setAuth({
+            role : role,
+            islogin: true
+          })
+          navigate('/mypage')
+        }
+      }
+      catch(error){
+        console.log(error)
         alert('로그인을 다시 시도해주세요')
       }
-  };
-
+    }
   return (
     <>
       <div className="flex items-center justify-center min-h-screen ">
