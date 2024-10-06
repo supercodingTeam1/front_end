@@ -18,7 +18,6 @@ const DeleteUser = ({ setIsDelete }) => {
   const hadleSubmit = async() => {
     try{
       const res = await deleteUser();
-      console.log(res)
       if(res.status === 200){
         tokenRepo.removeToken()
         tokenRepo.removeRefreshToken()

@@ -3,8 +3,6 @@ import MyBosxItem from "./myBox";
 
 const MyList = ({ orderlist  }) => {
   const location = useLocation();
-
-  console.log("마이리스트", orderlist);
   return (
     <>
       <div className="border-t border-black pt-5">

@@ -7,6 +7,7 @@ import { useRecoilValue } from "recoil";
 import { AuthAtom } from "../recoil/user/userAtom";
 import Logout from "./logout";
 import { useSearchParams } from "react-router-dom";
+import logo from '../assets/logo.png'
 
 export default function Header() {
   const [_, setSearchParams] = useSearchParams();
@@ -53,7 +54,9 @@ export default function Header() {
       }`}
     >
       <nav className="flex justify-between px-12 h-[70px]  items-center ">
-        <Link to="/">ICON</Link>
+        <Link to="/">
+          <img src={logo} alt="logo" className="w-10 h-10"/>
+        </Link>
         {/* category */}
         <div className="flex gap-20 text-base">
           {category.map((c) => {

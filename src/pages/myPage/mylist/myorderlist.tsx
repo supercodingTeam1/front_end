@@ -48,7 +48,6 @@ const MyOrderList = () => {
   const totalPage = Math.ceil(orderlist.length / itemperPage)
   const startIndex = (currentPage - 1) * itemperPage;
   const currentOrders = orderlist.slice(startIndex, startIndex + itemperPage);
-  console.log('페이지네이션 ',currentOrders)
   return (
     <>
       <div className="">

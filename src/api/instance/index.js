@@ -106,12 +106,12 @@ class Http {
     });
   }
 
-  refreshtoken(url, originrefreshToken){
+  refreshToken(url, originrefreshToken){
     return this.createRequest({
       method: 'POST',
       url,
       headers: {
-        'refreshToken': refreshToken, // 헤더에 리프레시 토큰 추가
+        'refreshToken': originrefreshToken, // 헤더에 리프레시 토큰 추가
         'Content-Type': 'application/json' // JSON 형식으로 요청
       }
     })

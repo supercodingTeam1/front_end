@@ -9,6 +9,8 @@ import { AuthAtom } from "../../recoil/user/userAtom";
 import DeleteUser from "../auth/deletuser";
 
 
+
+
 export type userData = {
   name: string;
   roles: string[];
@@ -77,6 +79,7 @@ const Mypage = () => {
   };
  
   useEffect(() => {
+    
     userData();
   }, [location.pathname]);
 

@@ -17,7 +17,6 @@ const Logout = () => {
 
     try{
       const res = await logout()
-      console.log(res)
       if(res.status === 200){
         tokenRepo.removeToken()
         tokenRepo.removeRefreshToken()

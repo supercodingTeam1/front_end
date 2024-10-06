@@ -63,14 +63,10 @@ instance.interceptors.response.use(
     if (response) {
       if (response.status === 401 || response.status === 400) {
         const originrefreshToken = tokenRepo.getRefreshToken();
-        console.log(originrefreshToken);
         const originalRequest = error.config;
-        console.log("오리진 리퀘스트 ", originalRequest);
 
         try {
-          console.log("트라이 부분 시작");
           const newAccessToken = await refreshTokenAPi(originrefreshToken);
-          console.log("리프레쉬토큰 가져오기 ", newAccessToken);
           tokenRepo.setToken(newAccessToken.user_token);
           tokenRepo.setRefreshToken(newAccessToken.user_refreshtoken);
 
@@ -79,7 +75,6 @@ instance.interceptors.response.use(
           return instance.request(originalRequest);
         } catch (refreshError) {
           console.error("Refresh token failed", refreshError);
-          console.log("안되고 있음");
           window.location.replace("/login");
           return Promise.reject(refreshError);
         }
